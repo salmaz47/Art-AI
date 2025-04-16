@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/signup_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_18sdp"
+        android:gravity="center"> <!-- Center TextFields -->
+
+        <!-- Name Field -->
+        <TextView
+            android:text="@string/namefield"
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/black"
+            /> <!-- Align start -->
+
+        <EditText
+            android:id="@+id/name_field"
+            android:background="@drawable/input_field_bg"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_35sdp"
+
+            android:padding="@dimen/_8ssp"
+            android:textSize="@dimen/_12ssp"
+            android:elevation="@dimen/_5sdp"/>
+
+        <!-- Email Field -->
+        <TextView
+
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/e_mail"
+            android:paddingBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_8sdp"
+           />
+
+        <EditText
+            android:id="@+id/email_field"
+            android:layout_width="@dimen/_220sdp"
+
+            android:background="@drawable/input_field_bg"
+            android:layout_height="@dimen/_35sdp"
+            android:padding="@dimen/_8ssp"
+            android:textSize="@dimen/_12ssp"
+            android:elevation="@dimen/_5sdp"/>
+
+        <!-- Password Field -->
+        <TextView
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/passwordField"
+            android:paddingBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/password_field"
+            android:layout_width="@dimen/_220sdp"
+
+            android:background="@drawable/input_field_bg"
+            android:layout_height="@dimen/_35sdp"
+
+            android:padding="@dimen/_8ssp"
+            android:textSize="@dimen/_12ssp"
+            android:elevation="@dimen/_5sdp"
+            android:inputType="textPassword"/>
+
+        <!-- Confirm Password Field -->
+        <TextView
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_password"
+            android:paddingBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/black"
+
+            />
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="@dimen/_220sdp"
+
+            android:background="@drawable/input_field_bg"
+            android:layout_height="@dimen/_35sdp"
+
+            android:padding="@dimen/_8ssp"
+            android:textSize="@dimen/_12ssp"
+            android:elevation="@dimen/_5sdp"
+            android:inputType="textPassword"/>
+
+        <!-- Age Field -->
+        <TextView
+
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/age"
+            android:textColor="@color/black"
+            android:paddingBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            />
+
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="@dimen/_220sdp"
+
+            android:background="@drawable/input_field_bg"
+            android:layout_height="@dimen/_35sdp"
+
+            android:padding="@dimen/_8ssp"
+            android:textSize="@dimen/_12ssp"
+            android:elevation="@dimen/_5sdp"
+            android:inputType="number"/>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp">
+
+
+            <CheckBox
+                android:id="@+id/checkBoxBoy"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_12ssp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text="@string/boy"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxGirl"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_12ssp"
+                android:layout_height="wrap_content"
+                android:text="@string/girl"/>
+
+        </LinearLayout>
+
+
+        <!-- Social Login Icons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/google_logo"
+                android:layout_marginEnd="@dimen/_25sdp"/>
+
+            <ImageView
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/facebook_logo"/>
+        </LinearLayout>
+
+        <!-- Done Button -->
+        <Button
+            android:id="@+id/done_btn"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:background="@drawable/login_btn_gradient"
+            android:fontFamily="@font/poppins_bold"
+            app:backgroundTint="@null"
+            android:text="@string/done"
+            android:enabled="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp"
+            />
+
+        <!-- Decorative Bottom Image -->
+
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

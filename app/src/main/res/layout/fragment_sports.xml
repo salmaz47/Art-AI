@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@drawable/lifestyle_bg"
+    tools:context=".fragments.MorningHabitsFragment">
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/sport_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#F4F3F3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="Sports"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="65dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/sport_text"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Team Sports -->
+            <TextView
+                android:id="@+id/team_sport_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#F4F3F3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp"
+                android:shadowRadius="5"
+                android:text="Team Sports"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <!-- RecyclerView for Team Sports -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewTeamSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
+
+            <!-- Individual Sports -->
+            <TextView
+                android:id="@+id/individual_sport_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#F4F3F3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp"
+                android:shadowRadius="5"
+                android:text="Individual Sports"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <!-- RecyclerView for Individual Sports -->
+            <!-- Individual Sports -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewIndividualSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
+
+            <TextView
+                android:id="@+id/material_arts_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#F4F3F3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp"
+                android:shadowRadius="5"
+                android:text="Material Arts"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <!-- RecyclerView for Individual Sports -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMaterialArtsSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
+            <!-- Individual Sports -->
+            <TextView
+                android:id="@+id/graceful_sport_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#F4F3F3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp"
+                android:shadowRadius="5"
+                android:text="Graceful &amp; Artistic Sports"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <!-- RecyclerView for Individual Sports -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewGracefulSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Navigation Bar (Stays Fixed at Bottom) -->
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

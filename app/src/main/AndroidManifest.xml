@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ArtAI"
+        tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".register.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".register.SignupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ModelActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:exported="true" />
+        <activity
+        android:name=".ui.CategoryActivity"
+        android:exported="true" />
+        <activity
+            android:name=".ui.LifestyleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.MorningHabitsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.NightHabitsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.AroundmeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.HabitDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.EntertainmentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.SportsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.StorysActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.EducationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.NumbersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.LettersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.ShapesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.StoryDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.FavoriteActivity"
+            android:exported="true" />
+        <activity android:name=".AboutActivity"
+            android:exported="true"/>
+        <activity android:name=".ui.DrawingActivity"
+            android:exported="true"/>
+
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+            android:value="true"/>
+
+    </application>
+
+</manifest>

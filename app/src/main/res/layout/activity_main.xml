@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/regrestration_bg"
+    tools:context=".MainActivity">
+
+
+ <LinearLayout
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     app:layout_constraintBottom_toBottomOf="parent"
+     android:id="@+id/content"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:gravity="center">
+
+
+     <ImageView
+         android:id="@+id/imageView"
+         android:layout_width="@dimen/_200sdp"
+         android:layout_height="@dimen/_200sdp"
+
+         android:layout_gravity="center"
+         app:srcCompat="@drawable/img" />
+     <TextView
+         android:id="@+id/long_text"
+         android:layout_width="match_parent"
+         android:shadowColor="#C3C3C3"
+         android:shadowDx="7"
+         android:shadowDy="3"
+         android:shadowRadius="5"
+         android:layout_height="wrap_content"
+         android:fontFamily="@font/kaushan_script"
+         android:text="@string/do_you_believe_in_ai"
+         android:gravity="center"
+         android:textColor="@color/black"
+         android:textSize="@dimen/_25ssp"/>
+     <TextView
+
+         android:id="@+id/lets_text"
+         android:layout_width="@dimen/_230sdp"
+         android:layout_height="wrap_content"
+         android:fontFamily="@font/kaushan_script"
+         android:text="@string/so_let_s"
+         android:shadowColor="#C3C3C3"
+         android:shadowDx="7"
+         android:shadowDy="3"
+         android:shadowRadius="5"
+         android:textColor="@color/black"
+         android:textSize="@dimen/_25ssp"/>
+
+     <Button
+         android:id="@+id/login_btn"
+         android:layout_width="@dimen/_230sdp"
+         android:layout_height="wrap_content"
+         android:layout_marginVertical="@dimen/_8sdp"
+         android:background="@drawable/login_btn_gradient"
+         android:fontFamily="@font/poppins_bold"
+
+         android:text="@string/login"
+         android:textColor="@color/white"
+         android:textSize="@dimen/_16ssp"
+         app:backgroundTint="@null" />
+
+     <Button
+         android:id="@+id/signup_btn"
+         android:layout_width="@dimen/_230sdp"
+         android:layout_height="wrap_content"
+         android:layout_marginVertical="@dimen/_8sdp"
+         android:background="@drawable/signup_btn_gradient"
+         android:text="@string/sign_up_as_a_user"
+         android:fontFamily="@font/poppins_bold"
+         android:textColor="@color/white"
+         android:textSize="@dimen/_16ssp"
+         app:backgroundTint="@null"
+         app:cornerRadius="50dp" />
+
+     <Button
+         android:id="@+id/guest_btn"
+         android:layout_width="@dimen/_230sdp"
+         android:layout_height="wrap_content"
+         android:layout_marginVertical="@dimen/_8sdp"
+         android:background="@drawable/gest_btn_gradient"
+         android:fontFamily="@font/poppins_bold"
+         android:text="@string/continue_as_a_guest"
+         android:textColor="@color/white"
+         android:textSize="@dimen/_16ssp"
+         app:backgroundTint="@null"
+         app:cornerRadius="50dp" />
+
+     <TextView
+         android:id="@+id/last_text"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="@dimen/_10sdp"
+         android:fontFamily="@font/kaushan_script"
+         android:gravity="end"
+         android:shadowColor="#C3C3C3"
+         android:shadowDx="7"
+         android:shadowDy="3"
+
+         app:layout_constraintTop_toBottomOf="@id/content"
+         android:shadowRadius="5"
+         android:text="@string/see_this_power_together"
+         android:textColor="@color/black"
+         android:textSize="@dimen/_22ssp" />
+ </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lifestyle_bg"
+    android:padding="@dimen/_15sdp">
+
+
+    <TextView
+        android:id="@+id/entertain_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#C3C3C3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="@string/entertainment"
+        android:textColor="#000000"
+        android:textSize="@dimen/_21ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Entertainment-->
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entertain_text">
+
+        <!-- Sports -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sport_card"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="60dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/entertain_text">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/category_sport" />
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Short Stories -->
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/shortstories_card"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="15dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eduction_card">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/category_short_stories" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Around Me -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/around_me_card"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shortstories_card">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/drawing" />
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:elevation="@dimen/_8sdp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

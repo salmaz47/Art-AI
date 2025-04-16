@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/model_bg"
+    android:paddingHorizontal="@dimen/_20sdp">
+
+    <LinearLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:fontFamily="@font/kavoon"
+            android:shadowColor="#C3C3C3"
+            android:shadowDx="7"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:text="@string/generate_anything_nin_your_mind_now"
+            android:textAlignment="center"
+            android:textColor="#B4000000"
+            android:textSize="@dimen/_30ssp" />
+
+        <!-- Input Field with Car Image Inside -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/inputcontainer"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@drawable/input_field_bg"
+            android:elevation="10dp"
+            android:paddingEnd="@dimen/_8sdp">
+
+            <EditText
+                android:id="@+id/inputText"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/kid_cleaning_the_bed"
+                android:padding="20dp"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@id/inputcontainer"
+                app:layout_constraintStart_toStartOf="@id/inputcontainer"
+                app:layout_constraintTop_toTopOf="@id/inputcontainer" />
+
+            <ImageView
+                android:id="@+id/carButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/car_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Moving Car Animation -->
+        <ImageView
+            android:id="@+id/movingCar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/car_icon"
+            android:visibility="gone" />
+
+        <!-- Generated Image Section -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/generated_image"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="165dp"
+                android:layout_height="55dp"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:backgroundTint="#6303A9F4"
+                android:drawableEnd="@drawable/favourite"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:text="Favorite"
+                android:shadowColor="@color/black"
+                android:elevation="@dimen/_50sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <Button
+                android:id="@+id/share_btn"
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:layout_marginVertical="@dimen/_8ssp"
+                android:backgroundTint="#6303A9F4"
+                android:drawableEnd="@drawable/share"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/share"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10ssp"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

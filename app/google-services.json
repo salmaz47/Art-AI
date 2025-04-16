@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "743866195544",
+    "project_id": "artai-db1d5",
+    "storage_bucket": "artai-db1d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743866195544:android:a058fb8773efaeba13b42d",
+        "android_client_info": {
+          "package_name": "com.salmee.artai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDofaBv8iGJBttUf0gDWDrhsh04-eF0Qxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

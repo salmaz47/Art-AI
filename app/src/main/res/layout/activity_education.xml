@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/education_bg"
+    android:padding="@dimen/_20sdp">
+
+
+    <TextView
+        android:id="@+id/education_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#C3C3C3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="@string/education"
+        android:textColor="#000000"
+        android:textSize="@dimen/_25ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Education-->
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/education_text">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/numbers_card"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_110sdp"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginStart="10dp"
+
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/education_text">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/category_numbers" />
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/numbers_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/kavoon"
+            android:shadowColor="#C3C3C3"
+            android:shadowDx="7"
+
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:textColor="#3548AD"
+            android:textSize="@dimen/_25ssp"
+            app:layout_constraintVertical_bias="1.0"
+            android:text="Numbers" />
+        <!-- Letters -->
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/letters_card"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_110sdp"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="15dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/numbers_card">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/category_letters" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Letters -->
+
+        <TextView
+            android:id="@+id/letter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:fontFamily="@font/kavoon"
+            android:shadowColor="#C3C3C3"
+            android:shadowDx="7"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:text="Letters"
+            android:textColor="#ED3A77"
+            android:textSize="@dimen/_25ssp"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/shapes_card"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/letters_card">
+
+            <ImageView
+                android:layout_width="162dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/category_shapes" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/shapes_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:fontFamily="@font/kavoon"
+            android:shadowColor="#C3C3C3"
+            android:shadowDx="7"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:text="Shapes"
+            android:textColor="#05BFC2"
+            android:textSize="@dimen/_25ssp"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:elevation="@dimen/_8sdp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/education_bg"
+    android:padding="@dimen/_20sdp">
+
+
+    <TextView
+        android:id="@+id/life_style_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#C3C3C3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="Life Style"
+        android:textColor="#000000"
+        android:textSize="@dimen/_25ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Education-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_150sdp"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/life_style_text"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/life_style_text">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/morning_habits_card"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginStart="10dp"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/life_style_text">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/morning_habits" />
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/morning_habits_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_9sdp"
+                 android:gravity="center"
+                android:layout_gravity="start"
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#C3C3C3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:shadowRadius="5"
+                android:textColor="#FF6466"
+                android:textSize="@dimen/_22ssp"
+                app:layout_constraintVertical_bias="1.0"
+                android:text="@string/morning_habits"
+                tools:ignore="RtlCompat" />
+            <!-- Letters -->
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/night_habits_card"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/night_habits_card">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/night_habits_bg" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Letters -->
+
+            <TextView
+                android:id="@+id/night_habits_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/kavoon"
+                android:gravity="center"
+                android:shadowColor="#C3C3C3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:shadowRadius="5"
+                android:text="@string/night_habits"
+                android:textColor="#397CB0"
+                android:textSize="@dimen/_25ssp"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/around_me_card"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/night_habits_text">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/around_me_bg" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/around_me_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/kavoon"
+                android:shadowColor="#C3C3C3"
+                android:shadowDx="7"
+               android:gravity="center"
+                android:shadowDy="3"
+                android:shadowRadius="5"
+                android:text="@string/around_n_me"
+                android:textColor="#05BFC2"
+                android:textSize="@dimen/_25ssp"
+                app:layout_constraintVertical_bias="1.0" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_120sdp"
+                android:visibility="invisible"
+                android:text="salmaaa">
+
+            </TextView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:elevation="@dimen/_8sdp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

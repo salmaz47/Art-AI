@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/_20sdp"
+    android:paddingVertical="@dimen/_30sdp"
+    tools:context=".AboutActivity">
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcom_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kavoon"
+        android:gravity="center"
+        android:text="Welcome to, Art AI"
+        android:textColor="@color/blue"
+        android:textSize="35sp" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/img" />
+
+    <!-- Description Text -->
+    <TextView
+        android:id="@+id/world_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="8dp"
+        android:text="An interactive and educational text-to-image generation app designed to spark creativity and fun for children!
+
+Our app's main feature allows users to generate unique images from text prompts using AI. This encourages imagination and helps children visualize their ideas in a fun and engaging way.
+
+To make the experience even more enjoyable, we’ve added a collection of pre-made images."
+
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+</LinearLayout>

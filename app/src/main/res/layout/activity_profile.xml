@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_bg"
+
+    android:paddingHorizontal="@dimen/_18sdp">
+
+
+    <TextView
+        android:id="@+id/hi_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_18ssp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#C3C3C3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="@string/hi"
+        android:textColor="#E91E63"
+        android:textSize="@dimen/_30ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#C3C3C3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:text="@string/name"
+        android:textColor="#397CB0"
+        android:textSize="@dimen/_30ssp"
+        app:layout_constraintStart_toEndOf="@id/hi_text"
+        app:layout_constraintTop_toBottomOf="@id/hi_text" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_text">
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:gravity="center"
+
+
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginBottom="@dimen/_40sdp"
+                android:src="@drawable/girl_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name_text">
+
+            </ImageView>
+
+            <!-- Name Button -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <Button
+                    android:id="@+id/name_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="start"
+                    android:paddingHorizontal="@dimen/_20sdp"
+                    android:text="@string/name"
+                    android:textColor="@android:color/black"
+
+                    android:textSize="@dimen/_15ssp" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Favorite Button -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_5sdp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <Button
+                    android:id="@+id/favorite_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:drawableEnd="@drawable/favourite_fill"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="start"
+                    android:paddingHorizontal="25dp"
+                    android:text="@string/favorite"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15ssp" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Saved Button -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <Button
+                    android:id="@+id/about_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="start"
+                    android:paddingHorizontal="@dimen/_20sdp"
+                    android:text="@string/about"
+                    android:textColor="@android:color/black"
+
+                    android:textSize="@dimen/_15ssp" />
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/signout_btn"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:background="@drawable/signup_btn_gradient"
+                android:fontFamily="@font/poppins_bold"
+                android:shadowColor="#C3C3C3"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:shadowRadius="5"
+                android:text="@string/sign_out"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:backgroundTint="@null"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="565dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

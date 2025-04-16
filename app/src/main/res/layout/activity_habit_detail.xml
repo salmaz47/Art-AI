@@ -1,0 +1,149 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    android:padding="@dimen/_18sdp">
+
+    <TextView
+        android:id="@+id/screen_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/kavoon"
+        android:shadowColor="#F4F3F3"
+        android:shadowDx="7"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:textColor="#000000"
+        android:textSize="@dimen/_25ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ScrollView added to make content scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/screen_text">
+
+        <LinearLayout
+            android:id="@+id/layout_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_15sdp">
+
+            <!-- Habit Image -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/habitImageView"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:scaleType="centerCrop" />
+
+            </LinearLayout>
+
+            <!-- Habit Title -->
+            <TextView
+                android:id="@+id/habitTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:shadowColor="#625F5F"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="8dp"
+                tools:text="Get dressed"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:background="@drawable/title_background"
+                android:shadowDx="7"
+                android:shadowDy="3"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Habit Description -->
+            <ScrollView
+                android:layout_width="@dimen/_240sdp"
+                android:layout_height="@dimen/_130sdp"
+                android:background="@drawable/bordered_textbox"
+                android:padding="@dimen/_8sdp"
+                android:scrollbars="vertical">
+
+                <TextView
+                    android:id="@+id/habitDescription"
+                    android:layout_width="@dimen/_230sdp"
+                    android:layout_height="0dp"
+                    android:lineSpacingExtra="2dp"
+                    android:padding="@dimen/_8sdp"
+                    android:scrollbars="vertical"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15ssp"
+                    tools:text="Once upon a time..." />
+
+
+            </ScrollView>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+               android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/fav_btn"
+                    android:layout_width="165dp"
+                    android:layout_height="55dp"
+                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:backgroundTint="#6303A9F4"
+                    android:drawableEnd="@drawable/favourite"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:text="Favorite"
+                    android:shadowColor="@color/black"
+                    android:elevation="@dimen/_50sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp" />
+
+                <Button
+                    android:id="@+id/share_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="55dp"
+                    android:layout_marginVertical="@dimen/_8ssp"
+                    android:backgroundTint="#6303A9F4"
+                    android:drawableEnd="@drawable/share"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/share"
+
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/navigation_bar"
+        layout="@layout/floating_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

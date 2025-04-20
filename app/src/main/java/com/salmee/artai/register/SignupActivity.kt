@@ -42,6 +42,7 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.doneBtn.setOnClickListener {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_elevation))
             val name = binding.nameField.text.toString()
             val email = binding.emailField.text.toString()
@@ -53,11 +54,13 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            authViewModel.signup(email, password) { success, message ->
+            authViewModel.signup(name,email, password) { success, message ->
                 if (success) {
                     authViewModel.sendEmailVerification { emailSent, errorMsg ->
                         if (emailSent) {
                             saveUserData(name, gender)
+                            //! I'm not sure if we need this toast, I checked the Backend and there's no column for the verification status in the users table. 
+                            //! It's not the Backend's fault, it's just a feature that is not built.
                             Toast.makeText(this, "Signup successful! Please verify your email.", Toast.LENGTH_LONG).show()
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()

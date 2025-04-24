@@ -65,6 +65,7 @@ dependencies {
     implementation ("com.intuit.sdp:sdp-android:1.1.1")
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
 }
   // 🚫 Force exclude Google Ads SDK from all dependencies
 configurations.all {

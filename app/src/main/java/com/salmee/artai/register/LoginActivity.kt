@@ -1,5 +1,6 @@
 package com.salmee.artai.register
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -24,8 +25,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        authViewModel = AuthViewModel(AuthRepositoryImpl(FirebaseAuth.getInstance()))
-        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+//        val viewModel = AuthViewModel(authRepository, sharedPrefs)
+        authViewModel = AuthViewModel(AuthRepositoryImpl(FirebaseAuth.getInstance()), sharedPrefs)
 
         binding.loginBtn.setOnClickListener {
             val email = binding.emailField.text.toString()

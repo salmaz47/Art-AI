@@ -1,5 +1,7 @@
 package com.salmee.artai.presentation.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,15 +20,19 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import com.salmee.artai.core.Constants.Api
 
-class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
+class AuthViewModel(
+    private val authRepository: AuthRepository,
+    private val sharedPreferences: SharedPreferences? = null
+) : ViewModel() {
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api"
 
+
     //! I know that the logic should not be in this file, but I'm not a Kotlin expert and it causes some errors that I'm not intrested in fixing.
     //! So the logic in login, signup functions should be moved to AuthRepositoryImpl.kt file.
     fun login(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
-        
+
         // authRepository.login(email, password)
         //     .onEach { result ->
         //         result.fold(
@@ -48,16 +54,19 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     .post(jsonBody.toString().toRequestBody(mediaType))
                     .build()
                     Log.d("AuthViewModel", "Sending LOGIN Request")
-
-                client.newCall(request).execute().use { response ->
-                    if (response.isSuccessful) {
-                        Log.d("AuthViewModel", "Login successful")
-                        val responseBody = response.body?.string()
-                        val jsonResponse = JSONObject(responseBody)
-                        val token = jsonResponse.getString("token")
-                        withContext(Dispatchers.Main) {
-                            onResult(true, null)
-                        }
+                    
+                    client.newCall(request).execute().use { response ->
+                        if (response.isSuccessful) {
+                            Log.d("AuthViewModel", "Login successful")
+                            val responseBody = response.body?.string()
+                            val jsonResponse = JSONObject(responseBody)
+                            val token = jsonResponse.getString("token")
+                            withContext(Dispatchers.Main) {
+                                onResult(true, null)
+                            }
+                            sharedPreferences?.edit()?.putString("token", token)?.apply()
+//                            val tokenShared = sharedPreferences?.getString("token", null)
+//                            Log.d("AuthViewModel", "Token from shared prefrence $tokenShared")
                     } else {
                         withContext(Dispatchers.Main) {
                             val errorBody = response.body?.string()

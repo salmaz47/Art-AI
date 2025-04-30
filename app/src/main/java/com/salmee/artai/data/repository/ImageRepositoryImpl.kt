@@ -229,7 +229,7 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
                             val imageJson = jsonResponse.optJSONObject("image") // Maybe returns image directly?
 
                             val result = if (imageJson != null) {
-                                ImageGenerateResponse(imageUrl = Image.fromJson(imageJson))
+                                ImageGenerateResponse(image = Image.fromJson(imageJson))
                             } else if (taskId != null) {
                                 ImageGenerateResponse(taskId = taskId)
                             } else {

@@ -3,6 +3,7 @@ package com.salmee.artai.data.repository
 import SharedPreferencesHelper
 import android.content.Context
 import android.util.Log
+import com.salmee.artai.core.Constants
 import com.salmee.artai.model.User
 import com.salmee.artai.model.UserProfileUpdate
 import com.salmee.artai.model.UserPasswordUpdate
@@ -19,7 +20,7 @@ import org.json.JSONObject
 
 class UserRepositoryImpl(private val context: Context) : UserRepository {
 
-    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api/user" // Base URL for user endpoints
+    private val baseUrl = "${Constants.BASE_URL}/api/user" // Base URL for user endpoints
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val prefsHelper = SharedPreferencesHelper

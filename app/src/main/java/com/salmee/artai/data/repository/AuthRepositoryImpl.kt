@@ -3,6 +3,7 @@ package com.salmee.artai.data.repository
 import SharedPreferencesHelper
 import android.content.Context
 import android.util.Log
+import com.salmee.artai.core.Constants
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -16,7 +17,7 @@ import org.json.JSONObject
 
 class AuthRepositoryImpl(private val context: Context) : AuthRepository {
     // Use the base URL from the original file, ensure it's correct
-    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api/auth" // Adjusted to include /auth
+    private val baseUrl = "${Constants.BASE_URL}/api/auth" // Adjusted to include /auth
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val prefsHelper = SharedPreferencesHelper // Access object directly

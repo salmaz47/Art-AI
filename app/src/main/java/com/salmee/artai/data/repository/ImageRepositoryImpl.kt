@@ -3,6 +3,7 @@ package com.salmee.artai.data.repository
 import SharedPreferencesHelper
 import android.content.Context
 import android.util.Log
+import com.salmee.artai.core.Constants
 import com.salmee.artai.model.Image
 import com.salmee.artai.model.ImageGenerateRequest
 import com.salmee.artai.model.ImageGenerateResponse
@@ -20,7 +21,7 @@ import org.json.JSONObject
 
 class ImageRepositoryImpl(private val context: Context) : ImageRepository {
 
-    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api/images" // Base URL for images endpoints
+    private val baseUrl = "${Constants.BASE_URL}/api/images" // Base URL for images endpoints
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val prefsHelper = SharedPreferencesHelper
@@ -228,7 +229,7 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
                             val imageJson = jsonResponse.optJSONObject("image") // Maybe returns image directly?
 
                             val result = if (imageJson != null) {
-                                ImageGenerateResponse(image = Image.fromJson(imageJson))
+                                ImageGenerateResponse(imageUrl = Image.fromJson(imageJson))
                             } else if (taskId != null) {
                                 ImageGenerateResponse(taskId = taskId)
                             } else {

@@ -46,6 +46,15 @@
     <string name="habit_description">Habit Description</string>
     <string name="about">About</string>
     <string name="favorites">Favorites</string>
+    <string name="continue_as_guest">Continue as Guest</string>
 
+
+    <string name="toggle_favorite">Toggle Favorite</string>
+
+
+    <string name="login_to_see_favorites">Please log in to see your favorites.</string>
+    <string name="no_favorites_yet">You haven\'t added any favorites yet.</string>
+    <string name="no_images_found">No images found</string>
+    <string name="drawings">Drawings</string>
 
 </resources>

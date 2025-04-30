@@ -41,6 +41,34 @@
         app:layout_constraintTop_toBottomOf="@id/letter_text"
         app:spanCount="2" />
 
+    <!-- Message for Guests -->
+    <TextView
+        android:id="@+id/guestMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_to_see_favorites"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewHabits"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewHabits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Message for Empty Favorites -->
+    <TextView
+        android:id="@+id/emptyFavoritesMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_favorites_yet"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewHabits"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewHabits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Floating Navigation Bar -->
     <include
         android:id="@+id/navigation_bar"

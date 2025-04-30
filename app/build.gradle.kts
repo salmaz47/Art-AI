@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+    id("kotlin-kapt") // Add kotlin-kapt plugin
 }
 
 android {
@@ -66,8 +67,10 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.github.bumptech.glide:compiler:4.12.0") // Add Glide compiler
+    implementation ("androidx.fragment:fragment-ktx:1.6.2") // Add Fragment KTX for viewModels
 }
-  // 🚫 Force exclude Google Ads SDK from all dependencies
+// 🚫 Force exclude Google Ads SDK from all dependencies
 configurations.all {
     exclude(group = "com.google.android.gms", module = "play-services-ads")
     exclude(group = "com.google.android.gms", module = "play-services-ads-lite")

@@ -1,178 +1,54 @@
 package com.salmee.artai.presentation.viewmodel
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.salmee.artai.data.repository.AuthRepository
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import com.salmee.artai.core.Constants.Api
 
-class AuthViewModel(
-    private val authRepository: AuthRepository,
-    private val sharedPreferences: SharedPreferences? = null
-) : ViewModel() {
-    private val client = OkHttpClient()
-    private val mediaType = "application/json; charset=utf-8".toMediaType()
-    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api"
+// Updated AuthViewModel to use LiveData for results
+class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
+    private val _signupResult = MutableLiveData<Result<Boolean>>()
+    val signupResult: LiveData<Result<Boolean>> = _signupResult
 
-    //! I know that the logic should not be in this file, but I'm not a Kotlin expert and it causes some errors that I'm not intrested in fixing.
-    //! So the logic in login, signup functions should be moved to AuthRepositoryImpl.kt file.
-    fun login(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+    private val _loginResult = MutableLiveData<Result<Boolean>>()
+    val loginResult: LiveData<Result<Boolean>> = _loginResult
 
-        // authRepository.login(email, password)
-        //     .onEach { result ->
-        //         result.fold(
-        //             onSuccess = { onResult(true, null) },
-        //             onFailure = { onResult(false, it.message) }
-        //         )
-        //     }
-        //     .launchIn(viewModelScope)
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val jsonBody = JSONObject().apply {
-                    
-                    put("email", email)
-                    put("password", password)
-                }
+    private val _resetPasswordResult = MutableLiveData<Result<Unit>>()
+    val resetPasswordResult: LiveData<Result<Unit>> = _resetPasswordResult
 
-                val request = Request.Builder()
-                    .url(Api.LOGIN_ENDPOINT)
-                    .post(jsonBody.toString().toRequestBody(mediaType))
-                    .build()
-                    Log.d("AuthViewModel", "Sending LOGIN Request")
-                    
-                    client.newCall(request).execute().use { response ->
-                        if (response.isSuccessful) {
-                            Log.d("AuthViewModel", "Login successful")
-                            val responseBody = response.body?.string()
-                            val jsonResponse = JSONObject(responseBody)
-                            val token = jsonResponse.getString("token")
-                            withContext(Dispatchers.Main) {
-                                onResult(true, null)
-                            }
-                            sharedPreferences?.edit()?.putString("token", token)?.apply()
-//                            val tokenShared = sharedPreferences?.getString("token", null)
-//                            Log.d("AuthViewModel", "Token from shared prefrence $tokenShared")
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            val errorBody = response.body?.string()
-                            val errorJson = JSONObject(errorBody ?: "{}")
-                            val errorMessage = errorJson.optString("message", "Login failed")
-                            Log.d("AuthViewModel", "Login Failed: $errorMessage")
-                            onResult(false, errorMessage)
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("AuthViewModel", "Login error: ${e.message}")
-                withContext(Dispatchers.Main) {
-                    onResult(false, e.message)
-                }
-            }
-        }
-        
-    }
-
-    
-
-    fun signup(name: String, email: String, password: String, onResult: (Boolean, String?) -> Unit) {
-        // authRepository.signup(name,email, password)
-        //     .onEach { result ->
-        //         result.fold(
-        //             onSuccess = { onResult(true, null) },
-        //             onFailure = { onResult(false, it.message) }
-        //         )
-        //     }
-        //     .launchIn(viewModelScope)
-
-        
-        //! NOTE: MAKE SURE TO CHECK IF THE EMULATOR HAVE INTERNET CONNECTION.
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val jsonBody = JSONObject().apply {
-                    put("name", name)
-                    put("email", email)
-                    put("password", password)
-                }
-
-
-                val request = Request.Builder()
-                    .url(Api.SIGNUP_ENDPOINT)
-                    .post(jsonBody.toString().toRequestBody(mediaType))
-                    .build()
-                    Log.d("AuthViewModel", "Sending SIGNUP Request")
-
-                client.newCall(request).execute().use { response ->
-                    if (response.isSuccessful) {
-                        Log.d("AuthViewModel", "Signup successful")
-                        val responseBody = response.body?.string()
-                        val jsonResponse = JSONObject(responseBody)
-                        val token = jsonResponse.getString("token")
-                        withContext(Dispatchers.Main) {
-                            onResult(true, null)
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            val errorBody = response.body?.string()
-                            val errorJson = JSONObject(errorBody ?: "{}")
-                            val errorMessage = errorJson.optString("message", "Registration failed")
-                            Log.d("AuthViewModel", "Signup Failed: $errorMessage")
-                            onResult(false, errorMessage)
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("AuthViewModel", "Signup error: ${e.message}")
-                withContext(Dispatchers.Main) {
-                    onResult(false, e.message)
-                }
-            }
+    fun signup(name: String, email: String, password: String) {
+        viewModelScope.launch {
+            authRepository.signup(name, email, password)
+                .catch { e -> _signupResult.postValue(Result.failure(e)) }
+                .collect { _signupResult.postValue(it) }
         }
     }
 
-
-
-    fun sendPasswordReset(email: String, onResult: (Boolean, String?) -> Unit) {
-        authRepository.resetPassword(email)
-            .onEach { result ->
-                result.fold(
-                    onSuccess = { onResult(true, null) },
-                    onFailure = { onResult(false, it.message) }
-                )
-            }
-            .launchIn(viewModelScope)
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            authRepository.login(email, password)
+                .catch { e -> _loginResult.postValue(Result.failure(e)) }
+                .collect { _loginResult.postValue(it) }
+        }
     }
 
-    fun sendEmailVerification(onResult: (Boolean, String?) -> Unit) {
-        authRepository.sendEmailVerification()
-            .onEach { result ->
-                result.fold(
-                    onSuccess = { onResult(true, null) },
-                    onFailure = { onResult(false, it.message) }
-                )
-            }
-            .launchIn(viewModelScope)
+    fun sendPasswordReset(email: String) {
+        viewModelScope.launch {
+            authRepository.resetPassword(email)
+                .catch { e -> _resetPasswordResult.postValue(Result.failure(e)) }
+                .collect { _resetPasswordResult.postValue(it) }
+        }
     }
 
+    // Logout is still synchronous in the repository
     fun logout() {
         authRepository.logout()
-    }
-
-    fun getCurrentUser(): FirebaseUser? {
-        return authRepository.getCurrentUser()
+        // No LiveData needed for logout in this ViewModel, handled in UserViewModel or directly
     }
 }
+

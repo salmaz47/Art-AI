@@ -3,154 +3,144 @@ package com.salmee.artai
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.os.Handler
-import android.os.Looper
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import android.widget.Toast // Import Toast
+import androidx.activity.viewModels // Use this import
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.salmee.artai.databinding.ActivityModelBinding
+import com.salmee.artai.presentation.viewmodel.ImageViewModel // Import ImageViewModel
 import com.salmee.artai.ui.CategoryActivity
 import com.salmee.artai.ui.ProfileActivity
-import com.salmee.artai.core.Constants.Api
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import com.bumptech.glide.Glide
-import android.widget.ImageView
-// import com.bumptech.glide.Glide
-
+import com.salmee.artai.utils.ViewModelFactory // Import ViewModelFactory
 
 class ModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModelBinding
-    private var isApiResponseReceived = false // Track API response
-    private val handler = Handler(Looper.getMainLooper()) // Handler for animations
+    private lateinit var imageViewModel: ImageViewModel // ViewModel for image operations
+    private var isGuest: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityModelBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
+        // Check guest status
+        isGuest = SharedPreferencesHelper.isGuestMode(applicationContext)
+
+        // --- ViewModel Setup ---
+        val factory = ViewModelFactory(context = applicationContext)
+        imageViewModel = ViewModelProvider(this, factory).get(ImageViewModel::class.java)
+
+        setupClickListeners()
+        observeViewModel()
+    }
+
+    private fun setupClickListeners() {
         // Navigation buttons
         binding.navigationBar.profileButton.setOnClickListener {
-            val i = Intent(this, ProfileActivity::class.java)
-            startActivity(i)
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
         binding.navigationBar.homeButton.setOnClickListener {
-            val i = Intent(this, CategoryActivity::class.java)
-            startActivity(i)
+            startActivity(Intent(this, CategoryActivity::class.java))
         }
         binding.navigationBar.centerIcon.setOnClickListener {
-            val i = Intent(this, ModelActivity::class.java)
-            startActivity(i)
-            finish()
+            // Already in ModelActivity, do nothing or refresh?
         }
 
-        // Car animation when clicking the car button inside EditText
+        // Generate button (car icon)
         binding.carButton.setOnClickListener {
-            isApiResponseReceived = false // Reset API response flag
-            startCarAnimation()
-//            simulateApiCall() // Replace this with your actual API call
-            callGenerateApi()
+            if (isGuest) {
+                Toast.makeText(this, "Please log in to generate images.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val prompt = binding.inputText.text.toString().trim()
+            if (prompt.isEmpty()) {
+                Toast.makeText(this, "Please enter a prompt", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Trigger generation via ViewModel
+            imageViewModel.generateImage(prompt)
         }
     }
+
+    private fun observeViewModel() {
+        // Observe generation loading state
+        imageViewModel.isGenerating.observe(this) { isLoading ->
+            if (isLoading) {
+                startCarAnimation() // Show loading animation
+                binding.generatedImageView.setImageResource(0) // Clear previous image
+                binding.carButton.isEnabled = false // Disable button while loading
+                binding.inputText.isEnabled = false
+            } else {
+                stopCarAnimation() // Hide loading animation
+                binding.carButton.isEnabled = true // Re-enable button
+                binding.inputText.isEnabled = true
+            }
+        }
+
+        // Observe generation result
+        imageViewModel.generateResult.observe(this) { result ->
+            result.fold(
+                onSuccess = { response ->
+                    // Handle response - assuming it might contain the image directly or need polling
+                    if (response.image != null) {
+                        Log.d("ModelActivity", "Image generated successfully: ${response.image.imageUrl}")
+                        Glide.with(this)
+                            .load(response.image.imageUrl)
+                            .placeholder(R.drawable.loading_placeholder) // Add a placeholder drawable
+                            .error(R.drawable.error_placeholder) // Add an error drawable
+                            .into(binding.generatedImageView)
+                    } else if (response.taskId != null) {
+                        // TODO: Implement polling logic if backend is async and returns task ID
+                        Log.d("ModelActivity", "Image generation started with task ID: ${response.taskId}")
+                        Toast.makeText(this, "Image generation started...", Toast.LENGTH_SHORT).show()
+                        // For now, just show a message
+                    } else {
+                         Log.w("ModelActivity", "Generation successful but no image or task ID received.")
+                         Toast.makeText(this, "Generation finished, but no image found.", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                onFailure = { exception ->
+                    Log.e("ModelActivity", "Image generation failed: ${exception.message}")
+                    Toast.makeText(this, "Generation failed: ${exception.message}", Toast.LENGTH_LONG).show()
+                    binding.generatedImageView.setImageResource(R.drawable.error_placeholder) // Show error placeholder
+                }
+            )
+        }
+    }
+
+    // --- Car Animation Logic (Simplified) ---
+    private var carAnimation: Animation? = null
 
     private fun startCarAnimation() {
-        val startX = binding.movingCar.x
-        val endX = startX + 1300 // Move right by 50 pixels
-
-        var count = 0 // Loop counter
-
-        fun animateCar() {
-            if (isApiResponseReceived||count>=3) {
-                binding.movingCar.visibility = View.GONE // Hide car when API response arrives
-                return
-            }
-
-            val animation = TranslateAnimation(0f, endX - startX, 0f, 0f)
-            animation.duration = 700 // 0.5 seconds
-            animation.repeatCount = 0 // Move back and forth
-            animation.repeatMode = TranslateAnimation.REVERSE
-            animation.fillAfter = true
-
-            animation.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
-                override fun onAnimationStart(animation: android.view.animation.Animation?) {}
-
-                override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                    count++
-                    if (!isApiResponseReceived && count < 3) {
-                        handler.postDelayed({ animateCar() }, 100) // Restart animation if needed
-                    }
-                }
-
-                override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
-            })
-
-            binding.movingCar.startAnimation(animation)
-        }
-
         binding.movingCar.visibility = View.VISIBLE
-        animateCar()
-    }
-
-    private fun simulateApiCall() {
-        
-        // Simulate API response after 3 seconds
-        handler.postDelayed({
-            isApiResponseReceived = true
-            binding.movingCar.visibility = View.GONE
-           // binding.generatedImage.setBackgroundResource(R.drawable.generated_image) // Example update
-        }, 3000)
-    }
-    private fun callGenerateApi() {
-        val client = OkHttpClient()
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-        val promptText = binding.inputText.text.toString()
-
-        // Get the token from SharedPreferences
-        val token = getSharedPreferences("MyPrefs", MODE_PRIVATE).getString("token", "")
-    
-        Log.d("ModelActivity", "Generate API call")
-    
-        val jsonBody = JSONObject().apply {
-            put("prompt", promptText)
+        // Simple continuous animation (replace with original if preferred)
+        carAnimation = TranslateAnimation(
+            Animation.RELATIVE_TO_PARENT, 0f,
+            Animation.RELATIVE_TO_PARENT, 0.8f, // Move across 80% of parent width
+            Animation.RELATIVE_TO_SELF, 0f,
+            Animation.RELATIVE_TO_SELF, 0f
+        ).apply {
+            duration = 1500 // Adjust duration
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.REVERSE
         }
-    
-        val request = Request.Builder()
-            .url(Api.GENERTE_IMAGE)
-            .addHeader("Authorization", "Bearer $token") // Add token to headers
-            .post(jsonBody.toString().toRequestBody(mediaType))
-            .build()
-    
-        Thread {
-            try {
-                client.newCall(request).execute().use { response ->
-                    val responseBody = response.body?.string()
-                    Log.d("ModelActivity", "Response: $responseBody")
-                    val jsonResponse = JSONObject(responseBody ?: "")
-                    val imageUrl = jsonResponse.getString("imageUrl") // Assuming this is a valid URL
-                
-                    if (response.isSuccessful) {
-                        isApiResponseReceived = true
-                        Log.d("ModelActivity", "Image URL: $imageUrl")
-
-                        runOnUiThread {
-                            // Use Glide to load the image into the ImageView
-                            Glide.with(this)
-    .load(imageUrl)
-    .into(binding.generatedImageView)  // Use the correct ID here
-                        }
-                    } else {
-                        Log.e("ModelActivity", "Failed to fetch image URL from API response")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("ModelActivity", "API call failed: ${e.message}")
-            }
-        }.start()
+        binding.movingCar.startAnimation(carAnimation)
     }
+
+    private fun stopCarAnimation() {
+        binding.movingCar.clearAnimation()
+        binding.movingCar.visibility = View.GONE
+        carAnimation = null
+    }
+
+    // Removed direct OkHttp call (callGenerateApi)
+    // Removed simulateApiCall
 }
+

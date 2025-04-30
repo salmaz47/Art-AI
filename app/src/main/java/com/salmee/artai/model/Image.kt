@@ -14,9 +14,9 @@ data class Image(
         // Helper function to parse from JSON, assuming backend returns JSON objects for images
         fun fromJson(json: JSONObject): Image {
             return Image(
-                id = json.getString("id"), // Adjust key if needed
-                imageUrl = json.getString("image_url"),
-                prompt = json.getString("prompt"),
+                id = json.getString("imageId"), // Adjust key if needed
+                imageUrl = json.getString("imageUrl"),
+                prompt = json.getString("message"),
                 isLoved = json.optBoolean("is_loved", false), // Use optBoolean with default
                 isSaved = json.optBoolean("is_saved", false)  // Use optBoolean with default
             )

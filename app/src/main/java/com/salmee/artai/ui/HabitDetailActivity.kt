@@ -48,12 +48,19 @@ class HabitDetailActivity : AppCompatActivity() {
 
 
         shareButton.setOnClickListener {
-            val shareIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Check out this habit: $name\n$description")
+            val shareText = "Check out this habit:\n${habitTitle.text}\n${habitDescription.text}"
+
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
             }
-            startActivity(Intent.createChooser(shareIntent, "Share via"))
+
+            // ❯ Ask the system whether anyone can handle the intent
+            if (sendIntent.resolveActivity(packageManager) != null) {
+                startActivity(Intent.createChooser(sendIntent, "Share via"))
+            } else {
+                Toast.makeText(this, "No app installed to share text.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.navigationBar.profileButton.setOnClickListener {

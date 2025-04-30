@@ -2,23 +2,20 @@ package com.salmee.artai.model // Adjusted package name based on previous file s
 
 import org.json.JSONObject
 
-// Model for a single image, matching backend GET /images/<image_id> response
+// Updated Model for a single image, matching backend GET /images response
 data class Image(
-    val id: String, // Assuming ID is String (UUID) or Int
-    val imageUrl: String,
-    val prompt: String,
-    val isLoved: Boolean, // From UserImage join table
-    val isSaved: Boolean  // From UserImage join table
+    val id: String,       // Corresponds to backend "imageId"
+    val imageUrl: String, // Corresponds to backend "imageUrl"
+    val prompt: String    // Corresponds to backend "message"
+    // isLoved is now managed locally via SharedPreferencesHelper
 ) {
     companion object {
-        // Helper function to parse from JSON, assuming backend returns JSON objects for images
+        // Updated helper function to parse from JSON, matching backend keys
         fun fromJson(json: JSONObject): Image {
             return Image(
-                id = json.getString("imageId"), // Adjust key if needed
-                imageUrl = json.getString("imageUrl"),
-                prompt = json.getString("message"),
-                isLoved = json.optBoolean("is_loved", false), // Use optBoolean with default
-                isSaved = json.optBoolean("is_saved", false)  // Use optBoolean with default
+                id = json.getString("imageId"),       // Use "imageId" from backend
+                imageUrl = json.getString("imageUrl"), // Use "imageUrl" from backend
+                prompt = json.getString("message")     // Use "message" from backend for prompt
             )
         }
     }

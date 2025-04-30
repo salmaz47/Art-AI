@@ -3,7 +3,6 @@ package com.salmee.artai.data.repository
 import SharedPreferencesHelper
 import android.content.Context
 import android.util.Log
-import com.salmee.artai.core.Constants
 import com.salmee.artai.model.Image
 import com.salmee.artai.model.ImageGenerateRequest
 import com.salmee.artai.model.ImageGenerateResponse
@@ -21,7 +20,7 @@ import org.json.JSONObject
 
 class ImageRepositoryImpl(private val context: Context) : ImageRepository {
 
-    private val baseUrl = "${Constants.BASE_URL}/api/images" // Base URL for images endpoints
+    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api/images" // Base URL for images endpoints
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val prefsHelper = SharedPreferencesHelper
@@ -30,12 +29,12 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
     private fun createAuthenticatedRequest(url: String, method: String = "GET", body: JSONObject? = null): Request {
         val token = prefsHelper.getAuthToken(context)
         if (token == null && !prefsHelper.isGuestMode(context)) {
-             // Only throw if not guest and token is missing. Guests shouldn't reach here for authed routes.
+            // Only throw if not guest and token is missing. Guests shouldn't reach here for authed routes.
             Log.w("ImageRepositoryImpl", "Auth token is null for non-guest user. Cannot make authenticated request to $url")
             throw IllegalStateException("User not authenticated")
         } else if (token == null && prefsHelper.isGuestMode(context)){
-             Log.w("ImageRepositoryImpl", "Attempting authenticated request in guest mode to $url")
-             throw IllegalStateException("Cannot perform this action in guest mode")
+            Log.w("ImageRepositoryImpl", "Attempting authenticated request in guest mode to $url")
+            throw IllegalStateException("Cannot perform this action in guest mode")
         }
 
         val requestBody = body?.toString()?.toRequestBody(mediaType)
@@ -55,12 +54,12 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
 
     override fun getImages(filter: ImageFilter): Flow<Result<List<Image>>> = callbackFlow {
         try {
-             if (prefsHelper.isGuestMode(context)) {
-                 // Decide guest behavior: empty list or error? Let's return empty list for viewing.
-                 Log.i("ImageRepositoryImpl", "Guest mode: Returning empty image list.")
-                 trySend(Result.success(emptyList()))
-                 awaitClose()
-                 return@callbackFlow
+            if (prefsHelper.isGuestMode(context)) {
+                // Decide guest behavior: empty list or error? Let's return empty list for viewing.
+                Log.i("ImageRepositoryImpl", "Guest mode: Returning empty image list.")
+                trySend(Result.success(emptyList()))
+                awaitClose()
+                return@callbackFlow
             }
 
             Log.d("ImageRepositoryImpl", "Fetching images with filter: ${filter.value}")
@@ -97,12 +96,12 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
     }
 
     override fun getImage(imageId: String): Flow<Result<Image>> = callbackFlow {
-         try {
-             if (prefsHelper.isGuestMode(context)) {
-                 // Guests likely cannot fetch specific image details if it requires auth
-                 trySend(Result.failure(Exception("Cannot fetch image details in guest mode.")))
-                 awaitClose()
-                 return@callbackFlow
+        try {
+            if (prefsHelper.isGuestMode(context)) {
+                // Guests likely cannot fetch specific image details if it requires auth
+                trySend(Result.failure(Exception("Cannot fetch image details in guest mode.")))
+                awaitClose()
+                return@callbackFlow
             }
             Log.d("ImageRepositoryImpl", "Fetching image details for ID: $imageId")
             val request = createAuthenticatedRequest("$baseUrl/$imageId")
@@ -134,11 +133,11 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
     }
 
     override fun deleteImage(imageId: String): Flow<Result<Unit>> = callbackFlow {
-         try {
-             if (prefsHelper.isGuestMode(context)) {
-                 trySend(Result.failure(Exception("Cannot delete image in guest mode.")))
-                 awaitClose()
-                 return@callbackFlow
+        try {
+            if (prefsHelper.isGuestMode(context)) {
+                trySend(Result.failure(Exception("Cannot delete image in guest mode.")))
+                awaitClose()
+                return@callbackFlow
             }
             Log.d("ImageRepositoryImpl", "Deleting image ID: $imageId")
             val request = createAuthenticatedRequest("$baseUrl/$imageId", method = "DELETE")
@@ -165,10 +164,10 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
     // Common function for love/save toggles
     private fun toggleImageStatus(imageId: String, action: String): Flow<Result<Boolean>> = callbackFlow {
         try {
-             if (prefsHelper.isGuestMode(context)) {
-                 trySend(Result.failure(Exception("Cannot $action image in guest mode.")))
-                 awaitClose()
-                 return@callbackFlow
+            if (prefsHelper.isGuestMode(context)) {
+                trySend(Result.failure(Exception("Cannot $action image in guest mode.")))
+                awaitClose()
+                return@callbackFlow
             }
             Log.d("ImageRepositoryImpl", "Toggling $action for image ID: $imageId")
             val request = createAuthenticatedRequest("$baseUrl/$imageId/$action", method = "PUT")
@@ -200,15 +199,15 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
     }
 
     fun saveImage(imageId: String): Flow<Result<Boolean>> {
-         return toggleImageStatus(imageId, "save")
+        return toggleImageStatus(imageId, "save")
     }
 
     override fun generateImage(requestData: ImageGenerateRequest): Flow<Result<ImageGenerateResponse>> = callbackFlow {
-         try {
-             if (prefsHelper.isGuestMode(context)) {
-                 trySend(Result.failure(Exception("Cannot generate image in guest mode.")))
-                 awaitClose()
-                 return@callbackFlow
+        try {
+            if (prefsHelper.isGuestMode(context)) {
+                trySend(Result.failure(Exception("Cannot generate image in guest mode.")))
+                awaitClose()
+                return@callbackFlow
             }
             Log.d("ImageRepositoryImpl", "Requesting image generation with prompt: ${requestData.prompt}")
             val jsonBody = JSONObject().apply {
@@ -240,8 +239,8 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
                             Log.i("ImageRepositoryImpl", "Image generation request successful.")
                             trySend(Result.success(result))
                         } else {
-                             Log.w("ImageRepositoryImpl", "Generate image successful but empty response body.")
-                             trySend(Result.failure(Exception("Generate image successful but empty response body.")))
+                            Log.w("ImageRepositoryImpl", "Generate image successful but empty response body.")
+                            trySend(Result.failure(Exception("Generate image successful but empty response body.")))
                         }
                     } else {
                         val errorBody = response.body?.string()

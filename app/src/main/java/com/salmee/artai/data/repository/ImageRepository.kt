@@ -2,7 +2,7 @@ package com.salmee.artai.data.repository
 
 import com.salmee.artai.model.Image
 import com.salmee.artai.model.ImageGenerateRequest
-import com.salmee.artai.model.ImageGenerateResponse
+// Removed import for ImageGenerateResponse
 import com.salmee.artai.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +18,7 @@ interface ImageRepository {
     fun getImage(imageId: String): Flow<Result<Image>>
     fun deleteImage(imageId: String): Flow<Result<Unit>>
     fun loveImage(imageId: String): Flow<Result<Boolean>> // Returns new love status
-    fun generateImage(request: ImageGenerateRequest): Flow<Result<ImageGenerateResponse>>
+    // Updated generateImage to return the generated Image directly
+    fun generateImage(request: ImageGenerateRequest): Flow<Result<Image>>
 }
 

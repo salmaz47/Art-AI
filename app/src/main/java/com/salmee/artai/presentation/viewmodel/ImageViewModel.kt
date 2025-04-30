@@ -9,7 +9,7 @@ import com.salmee.artai.data.repository.ImageFilter
 import com.salmee.artai.data.repository.ImageRepository
 import com.salmee.artai.model.Image
 import com.salmee.artai.model.ImageGenerateRequest
-import com.salmee.artai.model.ImageGenerateResponse
+// Removed import for ImageGenerateResponse
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -30,8 +30,9 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
     private val _favoriteStatusResult = MutableLiveData<Pair<String, Result<Boolean>>>()
     val favoriteStatusResult: LiveData<Pair<String, Result<Boolean>>> = _favoriteStatusResult
 
-    private val _generateResult = MutableLiveData<Result<ImageGenerateResponse>>()
-    val generateResult: LiveData<Result<ImageGenerateResponse>> = _generateResult
+    // Updated generateResult to hold Result<Image>
+    private val _generateResult = MutableLiveData<Result<Image>>()
+    val generateResult: LiveData<Result<Image>> = _generateResult
 
     // LiveData to track loading state for generation
     private val _isGenerating = MutableLiveData<Boolean>(false)
@@ -61,14 +62,14 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
             imageRepository.getImage(imageId)
                 .catch { e -> _imageDetailResult.postValue(Result.failure(e)) }
                 .collect { result ->
-                     _imageDetailResult.postValue(result)
-                     // Optionally sync this single image's favorite status
-                     result.onSuccess { image ->
-                         if (!isGuest()) {
-                             SharedPreferencesHelper.syncFavoritesFromData(context, listOf(image))
-                         }
-                     }
-                 }
+                    _imageDetailResult.postValue(result)
+                    // Optionally sync this single image's favorite status
+                    result.onSuccess { image ->
+                        if (!isGuest()) {
+                            SharedPreferencesHelper.syncFavoritesFromData(context, listOf(image))
+                        }
+                    }
+                }
         }
     }
 
@@ -83,7 +84,7 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
                     if (result.isSuccess) {
                         SharedPreferencesHelper.removeFavorite(context, imageId)
                     }
-                 }
+                }
         }
     }
 
@@ -126,7 +127,7 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
                             }
                         }
                         backendResult.onFailure {
-                             _favoriteStatusResult.postValue(Pair(imageId, Result.failure(it))) // Notify UI of backend failure
+                            _favoriteStatusResult.postValue(Pair(imageId, Result.failure(it))) // Notify UI of backend failure
                         }
                     }
             }
@@ -137,8 +138,8 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
 
     fun generateImage(prompt: String) {
         if (isGuest()) {
-             _generateResult.postValue(Result.failure(Exception("Please log in to generate images."))) // Inform user
-             return
+            _generateResult.postValue(Result.failure(Exception("Please log in to generate images."))) // Inform user
+            return
         }
         _isGenerating.postValue(true) // Start loading
         val request = ImageGenerateRequest(prompt = prompt)
@@ -148,10 +149,10 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
                     _generateResult.postValue(Result.failure(e))
                     _isGenerating.postValue(false) // Stop loading on error
                 }
-                .collect { result ->
+                .collect { result -> // result is now Result<Image>
                     _generateResult.postValue(result)
                     _isGenerating.postValue(false) // Stop loading on success/failure
-                 }
+                }
         }
     }
 }

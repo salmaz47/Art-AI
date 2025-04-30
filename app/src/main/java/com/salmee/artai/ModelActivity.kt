@@ -84,27 +84,17 @@ class ModelActivity : AppCompatActivity() {
             }
         }
 
-        // Observe generation result
+        // Observe generation result (now Result<Image>)
         imageViewModel.generateResult.observe(this) { result ->
             result.fold(
-                onSuccess = { response ->
-                    // Handle response - assuming it might contain the image directly or need polling
-                    if (response.image != null) {
-                        Log.d("ModelActivity", "Image generated successfully: ${response.image.imageUrl}")
-                        Glide.with(this)
-                            .load(response.image.imageUrl)
-                            .placeholder(R.drawable.loading_placeholder) // Add a placeholder drawable
-                            .error(R.drawable.error_placeholder) // Add an error drawable
-                            .into(binding.generatedImageView)
-                    } else if (response.taskId != null) {
-                        // TODO: Implement polling logic if backend is async and returns task ID
-                        Log.d("ModelActivity", "Image generation started with task ID: ${response.taskId}")
-                        Toast.makeText(this, "Image generation started...", Toast.LENGTH_SHORT).show()
-                        // For now, just show a message
-                    } else {
-                         Log.w("ModelActivity", "Generation successful but no image or task ID received.")
-                         Toast.makeText(this, "Generation finished, but no image found.", Toast.LENGTH_SHORT).show()
-                    }
+                onSuccess = { generatedImage -> // Directly receive the Image object
+                    Log.d("ModelActivity", "Image generated successfully: ${generatedImage.imageUrl}")
+                    Glide.with(this)
+                        .load(generatedImage.imageUrl)
+                        .placeholder(R.drawable.loading_placeholder) // Add a placeholder drawable
+                        .error(R.drawable.error_placeholder) // Add an error drawable
+                        .into(binding.generatedImageView)
+                    // Optionally add the new image to a local list or trigger a refresh
                 },
                 onFailure = { exception ->
                     Log.e("ModelActivity", "Image generation failed: ${exception.message}")

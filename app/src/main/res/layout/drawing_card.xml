@@ -24,5 +24,17 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/morning_habits" />
+
+        <!-- Favorite Button -->
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="?attr/selectableItemBackgroundBorderless" 
+            android:src="@drawable/ic_favorite_border" 
+            android:contentDescription="@string/toggle_favorite" /> 
+
     </androidx.cardview.widget.CardView>
 </LinearLayout>

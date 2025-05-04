@@ -41,6 +41,32 @@
         app:layout_constraintTop_toBottomOf="@id/shapes_text"
         app:spanCount="2" />
 
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewHabits"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewHabits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Message for Empty List -->
+    <TextView
+        android:id="@+id/emptyListMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_images_found"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewHabits"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewHabits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Floating Navigation Bar -->
     <include
         android:id="@+id/navigation_bar"

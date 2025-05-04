@@ -18,6 +18,7 @@
     <string name="see_this_power_together">See this power together</string>
     <string name="generate_anything_nin_your_mind_now">Generate Anything\nIn Your Mind Now</string>
     <string name="kid_cleaning_the_bed">Kid cleaning the Bed</string>
+    <string name="generated_image">Generated Image</string>
     <string name="share">Share</string>
     <string name="save">Save</string>
     <string name="hi">Hi,</string>
@@ -45,6 +46,15 @@
     <string name="habit_description">Habit Description</string>
     <string name="about">About</string>
     <string name="favorites">Favorites</string>
+    <string name="continue_as_guest">Continue as Guest</string>
 
+
+    <string name="toggle_favorite">Toggle Favorite</string>
+
+
+    <string name="login_to_see_favorites">Please log in to see your favorites.</string>
+    <string name="no_favorites_yet">You haven\'t added any favorites yet.</string>
+    <string name="no_images_found">No images found</string>
+    <string name="drawings">Drawings</string>
 
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.salmee.artai.ModelActivity
 import com.salmee.artai.R
 import com.salmee.artai.databinding.ActivityHabitDetailBinding
+import com.salmee.artai.model.Image
 
 class HabitDetailActivity : AppCompatActivity() {
     private var isFavorite = false
@@ -39,22 +40,31 @@ class HabitDetailActivity : AppCompatActivity() {
         habitDescription.text = description
         habitImageView.setImageResource(imageResId)
 
-        favButton.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_elevation))
-            isFavorite = !isFavorite  // Toggle the state
+//        favButton.setOnClickListener {
+//            it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_elevation))
+//
+//            val image = Image(
+//                id = imageResId,
+//                imageUrl =
+//            )
+//
+//            isFavorite = SharedPreferencesHelper.toggleFavorite(this, image)
+//            Toast.makeText(this, if (isFavorite) "Added to favorites" else "Removed from favorites", Toast.LENGTH_SHORT).show()
+//        }
 
-        }
 
 
 
         shareButton.setOnClickListener {
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Check out this habit: $name\n$description")
+                putExtra(Intent.EXTRA_TEXT, "Check out this habit: ${habitTitle.text}\n${habitDescription.text}")
                 type = "text/plain"
             }
-            startActivity(Intent.createChooser(shareIntent, "Share via"))
+
+            startActivity(Intent.createChooser(shareIntent, "Share using"))
         }
+
 
         binding.navigationBar.profileButton.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_elevation))

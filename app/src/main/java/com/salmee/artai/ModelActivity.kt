@@ -2,95 +2,161 @@ package com.salmee.artai
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import android.widget.Toast // Import Toast
+import androidx.activity.viewModels // Use this import
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.salmee.artai.databinding.ActivityModelBinding
+import com.salmee.artai.presentation.viewmodel.ImageViewModel // Import ImageViewModel
 import com.salmee.artai.ui.CategoryActivity
 import com.salmee.artai.ui.ProfileActivity
+import com.salmee.artai.utils.ViewModelFactory // Import ViewModelFactory
 
 class ModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModelBinding
-    private var isApiResponseReceived = false // Track API response
-    private val handler = Handler(Looper.getMainLooper()) // Handler for animations
+    private lateinit var imageViewModel: ImageViewModel // ViewModel for image operations
+    private var isGuest: Boolean = false
+    private lateinit var saveButton: View
+    private lateinit var shareButton: View
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityModelBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
+        // Check guest status
+        isGuest = SharedPreferencesHelper.isGuestMode(applicationContext)
+
+        // --- ViewModel Setup ---
+        val factory = ViewModelFactory(context = applicationContext)
+        imageViewModel = ViewModelProvider(this, factory).get(ImageViewModel::class.java)
+
+        setupClickListeners()
+        observeViewModel()
+
+        saveButton = binding.saveBtn
+        shareButton = binding.shareBtn
+
+    }
+
+    private fun setupClickListeners() {
         // Navigation buttons
         binding.navigationBar.profileButton.setOnClickListener {
-            val i = Intent(this, ProfileActivity::class.java)
-            startActivity(i)
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
         binding.navigationBar.homeButton.setOnClickListener {
-            val i = Intent(this, CategoryActivity::class.java)
-            startActivity(i)
+            startActivity(Intent(this, CategoryActivity::class.java))
         }
         binding.navigationBar.centerIcon.setOnClickListener {
-            val i = Intent(this, ModelActivity::class.java)
-            startActivity(i)
-            finish()
+            // Already in ModelActivity, do nothing or refresh?
         }
 
-        // Car animation when clicking the car button inside EditText
+        // Generate button (car icon)
         binding.carButton.setOnClickListener {
-            isApiResponseReceived = false // Reset API response flag
-            startCarAnimation()
-            simulateApiCall() // Replace this with your actual API call
-        }
-    }
-
-    private fun startCarAnimation() {
-        val startX = binding.movingCar.x
-        val endX = startX + 1300 // Move right by 50 pixels
-
-        var count = 0 // Loop counter
-
-        fun animateCar() {
-            if (isApiResponseReceived||count>=3) {
-                binding.movingCar.visibility = View.GONE // Hide car when API response arrives
-                return
+            if (isGuest) {
+                Toast.makeText(this, "Please log in to generate images.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            val animation = TranslateAnimation(0f, endX - startX, 0f, 0f)
-            animation.duration = 700 // 0.5 seconds
-            animation.repeatCount = 0 // Move back and forth
-            animation.repeatMode = TranslateAnimation.REVERSE
-            animation.fillAfter = true
+            val prompt = binding.inputText.text.toString().trim()
+            if (prompt.isEmpty()) {
+                Toast.makeText(this, "Please enter a prompt", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Trigger generation via ViewModel
+            imageViewModel.generateImage(prompt)
+        }
+    }
 
-            animation.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
-                override fun onAnimationStart(animation: android.view.animation.Animation?) {}
-
-                override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                    count++
-                    if (!isApiResponseReceived && count < 3) {
-                        handler.postDelayed({ animateCar() }, 100) // Restart animation if needed
-                    }
-                }
-
-                override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
-            })
-
-            binding.movingCar.startAnimation(animation)
+    private fun observeViewModel() {
+        // Observe generation loading state
+        imageViewModel.isGenerating.observe(this) { isLoading ->
+            if (isLoading) {
+                startCarAnimation() // Show loading animation
+                binding.generatedImageView.setImageResource(0) // Clear previous image
+                binding.carButton.isEnabled = false // Disable button while loading
+                binding.inputText.isEnabled = false
+            } else {
+                stopCarAnimation() // Hide loading animation
+                binding.carButton.isEnabled = true // Re-enable button
+                binding.inputText.isEnabled = true
+            }
         }
 
-        binding.movingCar.visibility = View.VISIBLE
-        animateCar()
+        // Observe generation result (now Result<Image>)
+        imageViewModel.generateResult.observe(this) { result ->
+            result.fold(
+                onSuccess = { generatedImage -> // Directly receive the Image object
+                    Log.d("ModelActivity", "Image generated successfully: ${generatedImage.imageUrl}")
+                    Glide.with(this)
+                        .load(generatedImage.imageUrl)
+                        .placeholder(R.drawable.loading_placeholder) // Add a placeholder drawable
+                        .error(R.drawable.error_placeholder) // Add an error drawable
+                        .into(binding.generatedImageView)
+                    // Optionally add the new image to a local list or trigger a refresh
+                    // Enable share & save
+                    saveButton.setOnClickListener {
+                        SharedPreferencesHelper.toggleFavorite(this, generatedImage)
+                        Toast.makeText(this, "Toggled favorite", Toast.LENGTH_SHORT).show()
+                    }
+
+                    shareButton.setOnClickListener {
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "Check out this image:\n${generatedImage.imageUrl}")
+                            type = "text/plain"
+                        }
+
+                        if (shareIntent.resolveActivity(packageManager) != null) {
+                            startActivity(Intent.createChooser(shareIntent, "Share via"))
+                        } else {
+                            Toast.makeText(this, "No app available to share.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                },
+                onFailure = { exception ->
+                    Log.e("ModelActivity", "Image generation failed: ${exception.message}")
+                    Toast.makeText(this, "Generation failed: ${exception.message}", Toast.LENGTH_LONG).show()
+                    binding.generatedImageView.setImageResource(R.drawable.error_placeholder) // Show error placeholder
+                }
+            )
+        }
     }
 
-    private fun simulateApiCall() {
-        // Simulate API response after 3 seconds
-        handler.postDelayed({
-            isApiResponseReceived = true
-            binding.movingCar.visibility = View.GONE
-           // binding.generatedImage.setBackgroundResource(R.drawable.generated_image) // Example update
-        }, 3000)
+    // --- Car Animation Logic (Simplified) ---
+    private var carAnimation: Animation? = null
+
+    private fun startCarAnimation() {
+        binding.movingCar.visibility = View.VISIBLE
+        // Simple continuous animation (replace with original if preferred)
+        carAnimation = TranslateAnimation(
+            Animation.RELATIVE_TO_PARENT, 0f,
+            Animation.RELATIVE_TO_PARENT, 0.8f, // Move across 80% of parent width
+            Animation.RELATIVE_TO_SELF, 0f,
+            Animation.RELATIVE_TO_SELF, 0f
+        ).apply {
+            duration = 1500 // Adjust duration
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.REVERSE
+        }
+        binding.movingCar.startAnimation(carAnimation)
     }
+
+    private fun stopCarAnimation() {
+        binding.movingCar.clearAnimation()
+        binding.movingCar.visibility = View.GONE
+        carAnimation = null
+    }
+
+    // Removed direct OkHttp call (callGenerateApi)
+    // Removed simulateApiCall
 }
+

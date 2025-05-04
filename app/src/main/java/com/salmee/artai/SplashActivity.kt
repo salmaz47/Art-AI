@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.salmee.artai.register.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +49,13 @@ class SplashActivity : AppCompatActivity() {
 
                 override fun onAnimationEnd(animation: Animation?) {
                     runOnUiThread {
-                      startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                       finish()
+                        val token = SharedPreferencesHelper.getAuthToken(this@SplashActivity)
+                        if (!token.isNullOrEmpty()) {
+                            startActivity(Intent(this@SplashActivity, ModelActivity::class.java)) // Logged in
+                        } else {
+                            startActivity(Intent(this@SplashActivity, MainActivity::class.java)) // Not logged in
+                        }
+                        finish()
                     }
                 }
 

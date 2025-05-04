@@ -3,6 +3,7 @@ package com.salmee.artai.fragments
 import android.content.Intent
 import android.net.Uri // For opening URLs
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +50,7 @@ class FavFragment : Fragment(), OnImageItemClickListener { // Implement listener
 
         setupRecyclerView()
         setupClickListeners()
-        observeViewModel()
+        loadFavoritesFromLocal()
 
         if (isGuest) {
             // Show guest message or empty state
@@ -72,6 +73,7 @@ class FavFragment : Fragment(), OnImageItemClickListener { // Implement listener
     }
 
     private fun observeViewModel() {
+        Log.d("FavFragment", "Favorite IDs: ${imageViewModel.getLocalFavoriteIds()}")
         imageViewModel.imagesResult.observe(viewLifecycleOwner) { result ->
             result.fold(
                 onSuccess = { allImages ->
@@ -125,6 +127,20 @@ class FavFragment : Fragment(), OnImageItemClickListener { // Implement listener
              result.onFailure {
                  Toast.makeText(requireContext(), "Failed to update favorite status", Toast.LENGTH_SHORT).show()
              }
+        }
+    }
+
+    private fun loadFavoritesFromLocal() {
+        val favoriteImages = SharedPreferencesHelper.getFavoriteImages(requireContext())
+        Log.d("FavFragment", "Loaded local favorites: ${favoriteImages.size}")
+
+        if (favoriteImages.isEmpty()) {
+            binding.emptyFavoritesMessage.visibility = View.VISIBLE
+            binding.recyclerViewHabits.visibility = View.GONE
+        } else {
+            binding.emptyFavoritesMessage.visibility = View.GONE
+            binding.recyclerViewHabits.visibility = View.VISIBLE
+            adapter.updateData(favoriteImages)
         }
     }
 

@@ -20,5 +20,6 @@ interface ImageRepository {
     fun loveImage(imageId: String): Flow<Result<Boolean>> // Returns new love status
     // Updated generateImage to return the generated Image directly
     fun generateImage(request: ImageGenerateRequest): Flow<Result<Image>>
+
 }
 

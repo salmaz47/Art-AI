@@ -66,13 +66,14 @@ class UserRepositoryImpl(private val context: Context) : UserRepository {
                         val responseBody = response.body?.string()
                         if (responseBody != null) {
                             val json = JSONObject(responseBody)
+                            val userO = json.getJSONObject("user")
                             // Assuming the backend returns the user object directly
                             val user = User(
-                                id = json.getString("id"), // Adjust keys based on actual backend response
-                                name = json.getString("name"),
-                                email = json.getString("email"),
-                                avatarUrl = json.optString("avatar_url", null),
-                                role = json.getString("role")
+                                id = userO.getString("id"), // Adjust keys based on actual backend response
+                                name = userO.getString("name"),
+                                email = userO.getString("email"),
+                                avatarUrl = userO.optString("avatar_url", null),
+                                role = userO.getString("role")
                             )
                             Log.i("UserRepositoryImpl", "Profile fetched successfully.")
                             trySend(Result.success(user))

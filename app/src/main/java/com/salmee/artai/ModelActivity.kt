@@ -21,6 +21,9 @@ class ModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityModelBinding
     private lateinit var imageViewModel: ImageViewModel // ViewModel for image operations
     private var isGuest: Boolean = false
+    private lateinit var saveButton: View
+    private lateinit var shareButton: View
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -38,6 +41,10 @@ class ModelActivity : AppCompatActivity() {
 
         setupClickListeners()
         observeViewModel()
+
+        saveButton = binding.saveBtn
+        shareButton = binding.shareBtn
+
     }
 
     private fun setupClickListeners() {
@@ -95,6 +102,25 @@ class ModelActivity : AppCompatActivity() {
                         .error(R.drawable.error_placeholder) // Add an error drawable
                         .into(binding.generatedImageView)
                     // Optionally add the new image to a local list or trigger a refresh
+                    // Enable share & save
+                    saveButton.setOnClickListener {
+                        SharedPreferencesHelper.toggleFavorite(this, generatedImage)
+                        Toast.makeText(this, "Toggled favorite", Toast.LENGTH_SHORT).show()
+                    }
+
+                    shareButton.setOnClickListener {
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "Check out this image:\n${generatedImage.imageUrl}")
+                            type = "text/plain"
+                        }
+
+                        if (shareIntent.resolveActivity(packageManager) != null) {
+                            startActivity(Intent.createChooser(shareIntent, "Share via"))
+                        } else {
+                            Toast.makeText(this, "No app available to share.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 },
                 onFailure = { exception ->
                     Log.e("ModelActivity", "Image generation failed: ${exception.message}")

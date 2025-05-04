@@ -101,37 +101,37 @@ class ImageViewModel(private val imageRepository: ImageRepository, private val c
     // Toggle favorite: Update local immediately, sync backend for logged-in users
     fun toggleFavorite(imageId: String) {
         // 1. Toggle local status immediately and get the new status
-        val newLocalStatus = SharedPreferencesHelper.toggleFavorite(context, imageId)
-        _favoriteStatusResult.postValue(Pair(imageId, Result.success(newLocalStatus))) // Notify UI immediately of local change
-
-        // 2. If logged in, sync with backend (fire and forget or handle result)
-        if (!isGuest()) {
-            viewModelScope.launch {
-                imageRepository.loveImage(imageId) // Call the backend toggle
-                    .catch { e ->
-                        // Backend call failed - local state might be out of sync
-                        // Optionally revert local state or notify user
-                        _favoriteStatusResult.postValue(Pair(imageId, Result.failure(e))) // Notify UI of backend failure
-                        // Revert local change on failure?
-                        // SharedPreferencesHelper.toggleFavorite(context, imageId)
-                    }
-                    .collect { backendResult ->
-                        backendResult.onSuccess {
-                            // Backend success - ensure local matches backend state (though it should)
-                            val backendStatus = it
-                            if (SharedPreferencesHelper.isFavorite(context, imageId) != backendStatus) {
-                                if (backendStatus) SharedPreferencesHelper.addFavorite(context, imageId)
-                                else SharedPreferencesHelper.removeFavorite(context, imageId)
-                                // Notify UI again if backend caused a change different from initial local toggle
-                                _favoriteStatusResult.postValue(Pair(imageId, Result.success(backendStatus)))
-                            }
-                        }
-                        backendResult.onFailure {
-                            _favoriteStatusResult.postValue(Pair(imageId, Result.failure(it))) // Notify UI of backend failure
-                        }
-                    }
-            }
-        }
+//        val newLocalStatus = SharedPreferencesHelper.toggleFavorite(context, imageId)
+//        _favoriteStatusResult.postValue(Pair(imageId, Result.success(newLocalStatus))) // Notify UI immediately of local change
+//
+//        // 2. If logged in, sync with backend (fire and forget or handle result)
+//        if (!isGuest()) {
+//            viewModelScope.launch {
+//                imageRepository.loveImage(imageId) // Call the backend toggle
+//                    .catch { e ->
+//                        // Backend call failed - local state might be out of sync
+//                        // Optionally revert local state or notify user
+//                        _favoriteStatusResult.postValue(Pair(imageId, Result.failure(e))) // Notify UI of backend failure
+//                        // Revert local change on failure?
+//                        // SharedPreferencesHelper.toggleFavorite(context, imageId)
+//                    }
+//                    .collect { backendResult ->
+//                        backendResult.onSuccess {
+//                            // Backend success - ensure local matches backend state (though it should)
+//                            val backendStatus = it
+//                            if (SharedPreferencesHelper.isFavorite(context, imageId) != backendStatus) {
+//                                if (backendStatus) SharedPreferencesHelper.addFavorite(context, imageId)
+//                                else SharedPreferencesHelper.removeFavorite(context, imageId)
+//                                // Notify UI again if backend caused a change different from initial local toggle
+//                                _favoriteStatusResult.postValue(Pair(imageId, Result.success(backendStatus)))
+//                            }
+//                        }
+//                        backendResult.onFailure {
+//                            _favoriteStatusResult.postValue(Pair(imageId, Result.failure(it))) // Notify UI of backend failure
+//                        }
+//                    }
+//            }
+//        }
     }
 
     // Removed toggleSaveImage as it wasn't in the backend spec, assuming 'favorite' is 'love'

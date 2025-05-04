@@ -6,16 +6,17 @@ import org.json.JSONObject
 data class Image(
     val id: String,       // Corresponds to backend "imageId"
     val imageUrl: String, // Corresponds to backend "imageUrl"
-    val prompt: String    // Corresponds to backend "message"
-    // isLoved is now managed locally via SharedPreferencesHelper
+    val prompt: String,    // Corresponds to backend "message"
+    val isLoved: Boolean = false,
+    val isSaved: Boolean = false
 ) {
     companion object {
         // Updated helper function to parse from JSON, matching backend keys
         fun fromJson(json: JSONObject): Image {
             return Image(
-                id = json.getString("imageId"),       // Use "imageId" from backend
-                imageUrl = json.getString("imageUrl"), // Use "imageUrl" from backend
-                prompt = json.getString("message")     // Use "message" from backend for prompt
+                id = json.optString("imageId", json.optString("id")),       // Use "imageId" from backend
+                imageUrl = json.optString("imageUrl", json.optString("image_url")),
+                prompt = json.optString("message", json.optString("prompt"))     // Use "message" from backend for prompt
             )
         }
     }

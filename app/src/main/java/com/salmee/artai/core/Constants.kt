@@ -1,7 +1,7 @@
 package com.salmee.artai.core
 
 object Constants {
-    const val BASE_URL = "https://84b9-102-41-134-181.ngrok-free.app"
+    const val BASE_URL = "http://203.161.50.194:5000"
     
     object Api {
         const val SIGNUP_ENDPOINT = "$BASE_URL/auth/signup"

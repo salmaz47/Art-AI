@@ -1,6 +1,7 @@
 package com.salmee.artai.adapters // Corrected package name based on file structure
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class DrawingAdapter(
         // Removed drawingCard reference if the whole card click is handled differently
 
         fun bind(image: Image, position: Int) {
+            Log.d("DrawingAdapter", "Binding image ID: ${image.id}, isFavorite: ${SharedPreferencesHelper.isFavorite(context, image.id)}")
             // Load image using Glide
             Glide.with(context)
                 .load(image.imageUrl)

@@ -20,7 +20,7 @@ import org.json.JSONObject
 
 class ImageRepositoryImpl(private val context: Context) : ImageRepository {
 
-    private val baseUrl = "https://3a89-156-193-239-189.ngrok-free.app/api/images" // Base URL for images endpoints
+    private val baseUrl = "http://203.161.50.194:5000/api/images" // Base URL for images endpoints
     private val client = OkHttpClient()
     private val mediaType = "application/json; charset=utf-8".toMediaType()
     private val prefsHelper = SharedPreferencesHelper
@@ -70,10 +70,12 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
                     if (response.isSuccessful) {
                         val responseBody = response.body?.string()
                         if (responseBody != null) {
-                            val jsonArray = JSONArray(responseBody) // Assuming backend returns a JSON array
+                            val jsonArray = JSONObject(responseBody) // Assuming backend returns a JSON array
+                            val imagesObject = jsonArray.getJSONArray("images")
+                            Log.i("ImageRepositoryImpl", "Fetched $imagesObject images.")
                             val images = mutableListOf<Image>()
-                            for (i in 0 until jsonArray.length()) {
-                                images.add(Image.fromJson(jsonArray.getJSONObject(i)))
+                            for (i in 0 until imagesObject.length()) {
+                                images.add(Image.fromJson(imagesObject.getJSONObject(i)))
                             }
                             Log.i("ImageRepositoryImpl", "Fetched ${images.size} images.")
                             trySend(Result.success(images))
@@ -202,58 +204,47 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
         return toggleImageStatus(imageId, "save")
     }
 
-    override fun generateImage(requestData: ImageGenerateRequest): Flow<Result<ImageGenerateResponse>> = callbackFlow {
+    override fun generateImage(requestData: ImageGenerateRequest): Flow<Result<Image>> = callbackFlow {
         try {
             if (prefsHelper.isGuestMode(context)) {
                 trySend(Result.failure(Exception("Cannot generate image in guest mode.")))
                 awaitClose()
                 return@callbackFlow
             }
+
             Log.d("ImageRepositoryImpl", "Requesting image generation with prompt: ${requestData.prompt}")
             val jsonBody = JSONObject().apply {
                 put("prompt", requestData.prompt)
-                // Add other fields if needed by the backend
             }
+
             val request = createAuthenticatedRequest("$baseUrl/generate", method = "POST", body = jsonBody)
 
             withContext(Dispatchers.IO) {
                 client.newCall(request).execute().use { response ->
-                    if (response.isSuccessful) {
-                        val responseBody = response.body?.string()
-                        if (responseBody != null) {
-                            // Parse the response based on what the backend returns (e.g., task ID or the final image)
-                            // Example: Assuming it returns a task ID
-                            val jsonResponse = JSONObject(responseBody)
-                            val taskId = jsonResponse.optString("request_id", null) // Fal task id?
-                            val imageJson = jsonResponse.optJSONObject("image") // Maybe returns image directly?
+                    val responseBody = response.body?.string()
+                    Log.d("ImageRepositoryImpl", "Raw generation response: $responseBody")
 
-                            val result = if (imageJson != null) {
-                                ImageGenerateResponse(image = Image.fromJson(imageJson))
-                            } else if (taskId != null) {
-                                ImageGenerateResponse(taskId = taskId)
-                            } else {
-                                // Handle unexpected successful response format
-                                Log.w("ImageRepositoryImpl", "Generate image successful but response format unknown: $responseBody")
-                                ImageGenerateResponse() // Empty response
-                            }
-                            Log.i("ImageRepositoryImpl", "Image generation request successful.")
-                            trySend(Result.success(result))
-                        } else {
-                            Log.w("ImageRepositoryImpl", "Generate image successful but empty response body.")
-                            trySend(Result.failure(Exception("Generate image successful but empty response body.")))
-                        }
+                    if (response.isSuccessful && responseBody != null) {
+                        val json = JSONObject(responseBody)
+
+                        // Directly parse the image from the top-level JSON
+                        val image = Image.fromJson(json)
+
+                        Log.i("ImageRepositoryImpl", "Image generation successful.")
+                        trySend(Result.success(image))
                     } else {
-                        val errorBody = response.body?.string()
-                        Log.e("ImageRepositoryImpl", "Generate image failed: ${response.code}, Body: $errorBody")
-                        trySend(Result.failure(Exception("Generate image failed: ${response.code} - ${errorBody ?: "Unknown error"}")))
+                        val errorMsg = responseBody ?: "Unknown error"
+                        Log.e("ImageRepositoryImpl", "Image generation failed: $errorMsg")
+                        trySend(Result.failure(Exception("Image generation failed: $errorMsg")))
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e("ImageRepositoryImpl", "Generate image error: ${e.message}", e)
+            Log.e("ImageRepositoryImpl", "Image generation error: ${e.message}", e)
             trySend(Result.failure(e))
         }
         awaitClose { Log.d("ImageRepositoryImpl", "Generate Image Flow closed") }
     }
+
 }
 

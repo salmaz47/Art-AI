@@ -1,5 +1,7 @@
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.salmee.artai.model.Image
 
 object SharedPreferencesHelper {
@@ -8,6 +10,7 @@ object SharedPreferencesHelper {
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_IS_GUEST = "is_guest"
     private const val KEY_FAVORITE_IMAGE_IDS = "favorite_image_ids" // Key for storing favorite IDs
+    private const val KEY_FAVORITE_IMAGES = "favorite_images"
 
     private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -51,6 +54,14 @@ object SharedPreferencesHelper {
         getPrefs(context).edit().clear().apply()
     }
 
+    fun getFavoriteImages(context: Context): List<Image> {
+        val json = getPrefs(context).getString(KEY_FAVORITE_IMAGES, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<Image>>() {}.type
+            Gson().fromJson(json, type)
+        } else emptyList()
+    }
+
     // --- Favorites (Local Storage) --- 
 
     fun getFavoriteImageIds(context: Context): MutableSet<String> {
@@ -76,16 +87,23 @@ object SharedPreferencesHelper {
         }
     }
 
-    fun toggleFavorite(context: Context, imageId: String): Boolean {
-        val favorites = getFavoriteImageIds(context)
-        val isCurrentlyFavorite = favorites.contains(imageId)
-        if (isCurrentlyFavorite) {
-            favorites.remove(imageId)
+    fun toggleFavorite(context: Context, image: Image): Boolean {
+        val prefs = getPrefs(context)
+        val gson = Gson()
+
+        val current = getFavoriteImages(context).toMutableList()
+        val existing = current.find { it.id == image.id }
+
+        val isNowFavorite = if (existing != null) {
+            current.remove(existing)
+            false
         } else {
-            favorites.add(imageId)
+            current.add(image)
+            true
         }
-        getPrefs(context).edit().putStringSet(KEY_FAVORITE_IMAGE_IDS, favorites).apply()
-        return !isCurrentlyFavorite // Return the new favorite status
+
+        prefs.edit().putString(KEY_FAVORITE_IMAGES, gson.toJson(current)).apply()
+        return isNowFavorite
     }
 
     fun clearFavorites(context: Context) {

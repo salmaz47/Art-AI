@@ -221,8 +221,10 @@ class ImageRepositoryImpl(private val context: Context) : ImageRepository {
 
             withContext(Dispatchers.IO) {
                 client.newCall(request).execute().use { response ->
+                    Log.d("ModelActivity", "Image generated successfully: ${response.body}")
                     val responseBody = response.body?.string()
                     Log.d("ImageRepositoryImpl", "Raw generation response: $responseBody")
+
 
                     if (response.isSuccessful && responseBody != null) {
                         val json = JSONObject(responseBody)

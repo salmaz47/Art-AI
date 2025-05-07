@@ -26,6 +26,7 @@ class DrawingAdapter(
 
     inner class DrawingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val drawingImage: ImageView = itemView.findViewById(R.id.habitImage) // Keep ID or rename?
+        val favoriteButton: ImageButton = itemView.findViewById(R.id.favorite_button)
         // Removed drawingCard reference if the whole card click is handled differently
 
         fun bind(image: Image, position: Int) {
@@ -38,8 +39,16 @@ class DrawingAdapter(
                 .centerCrop()
                 .into(drawingImage)
 
+            // Set initial favorite state from local storage
+            val isFavorite = SharedPreferencesHelper.isFavorite(context, image.id)
+            favoriteButton.setImageResource(
+                if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+            )
 
-
+            // Favorite button click listener
+            favoriteButton.setOnClickListener {
+                listener.onFavoriteClick(image, position)
+            }
 
             // Image click listener (whole item)
             itemView.setOnClickListener {
@@ -50,7 +59,7 @@ class DrawingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrawingViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_paint, parent, false) // Use the updated layout
+            .inflate(R.layout.drawing_card, parent, false) // Use the updated layout
         return DrawingViewHolder(view)
     }
 
@@ -76,4 +85,3 @@ class DrawingAdapter(
         }
     }
 }
-

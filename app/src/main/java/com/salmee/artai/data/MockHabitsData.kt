@@ -3,7 +3,7 @@ package com.salmee.artai.data
 
 
 import com.salmee.artai.R
-import com.salmee.artai.model.DrawingItem
+import com.salmee.artai.model.PaintItem
 import com.salmee.artai.model.Habit
 
 object MockHabitsData {
@@ -277,15 +277,15 @@ object MockHabitsData {
 
             )
     }
-    fun getDrawings(): List<DrawingItem>
+    fun getDrawings(): List<PaintItem>
     {
         return listOf(
-            DrawingItem(R.drawable.puppy,"https://youtu.be/g55jWHQdq0c?si=EEiZibJwv-JUaD6g"),
-            DrawingItem(R.drawable.cat,"https://youtu.be/8GPOPkh1rLc?si=DxJfL8QJNV4m47j3"),
-            DrawingItem(R.drawable.lion,"https://youtu.be/wCfm-SH-rww?si=JFco-aDZQLY_5y3e"),
-            DrawingItem(R.drawable.unicorn,"https://youtu.be/YeCsjdSsh6U?si=JBE4BsmuJuie4Zth"),
-            DrawingItem(R.drawable.elefant,"https://youtu.be/85cPylunkXU?si=jUxtsTeAXLcSAQCC"),
-            DrawingItem(R.drawable.butterfly,"https://youtu.be/oVZwLW7t1hQ?si=lB637b3_K7OCIz3s"),
+            PaintItem(R.drawable.puppy,"https://youtu.be/g55jWHQdq0c?si=EEiZibJwv-JUaD6g"),
+            PaintItem(R.drawable.cat,"https://youtu.be/8GPOPkh1rLc?si=DxJfL8QJNV4m47j3"),
+            PaintItem(R.drawable.lion,"https://youtu.be/wCfm-SH-rww?si=JFco-aDZQLY_5y3e"),
+            PaintItem(R.drawable.unicorn,"https://youtu.be/YeCsjdSsh6U?si=JBE4BsmuJuie4Zth"),
+            PaintItem(R.drawable.elefant,"https://youtu.be/85cPylunkXU?si=jUxtsTeAXLcSAQCC"),
+            PaintItem(R.drawable.butterfly,"https://youtu.be/oVZwLW7t1hQ?si=lB637b3_K7OCIz3s"),
         )
     }
 

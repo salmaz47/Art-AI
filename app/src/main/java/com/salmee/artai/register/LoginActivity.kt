@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider // Use ViewModelProvider
+import com.salmee.artai.ModelActivity
 import com.salmee.artai.ui.ProfileActivity // Assuming this is the main activity after login/guest
 import com.salmee.artai.data.repository.AuthRepositoryImpl
 import com.salmee.artai.databinding.ActivityLoginBinding
@@ -86,26 +87,26 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // --- Continue as Guest --- 
-        binding.continueAsGuest.setOnClickListener {
-            SharedPreferencesHelper.setGuestMode(applicationContext, true)
-            Toast.makeText(this, "Continuing as Guest", Toast.LENGTH_SHORT).show()
-            navigateToMainApp()
-        }
+        /* binding.continueAsGuest.setOnClickListener {
+             SharedPreferencesHelper.setGuestMode(applicationContext, true)
+             Toast.makeText(this, "Continuing as Guest", Toast.LENGTH_SHORT).show()
+             navigateToMainApp()
+         }
 
-        // --- Social Login (Placeholder - requires backend integration) ---
-        binding.googleBtn.setOnClickListener {
-            // TODO: Implement Google Sign-In flow and backend /auth/google call
-            Toast.makeText(this, "Google login not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-        binding.facebookBtn.setOnClickListener {
-            // TODO: Implement Facebook Sign-In flow and potential backend endpoint
-            Toast.makeText(this, "Facebook login not implemented yet", Toast.LENGTH_SHORT).show()
-        }
+         // --- Social Login (Placeholder - requires backend integration) ---
+         binding.googleBtn.setOnClickListener {
+             // TODO: Implement Google Sign-In flow and backend /auth/google call
+             Toast.makeText(this, "Google login not implemented yet", Toast.LENGTH_SHORT).show()
+         }
+         binding.facebookBtn.setOnClickListener {
+             // TODO: Implement Facebook Sign-In flow and potential backend endpoint
+             Toast.makeText(this, "Facebook login not implemented yet", Toast.LENGTH_SHORT).show()
+         }*/
     }
 
     private fun navigateToMainApp() {
         // Navigate to the main activity (e.g., ProfileActivity or a new MainActivity)
-        val intent = Intent(this, ProfileActivity::class.java)
+        val intent = Intent(this, ModelActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Clear back stack
         startActivity(intent)
         finish() // Finish LoginActivity

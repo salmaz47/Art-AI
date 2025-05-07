@@ -51,13 +51,7 @@
                     android:layout_height="200dp"
                     android:scaleType="centerCrop" />
 
-                <ImageView
-                    android:id="@+id/favorite_btn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/favourite" />
+
             </LinearLayout>
 
             <!-- Habit Title -->
@@ -80,6 +74,9 @@
                 android:textStyle="bold" />
 
             <!-- Habit Description -->
+            <!-- Buttons -->
+
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -93,7 +90,6 @@
                     android:layout_height="0dp"
                     android:lineSpacingExtra="2dp"
                     android:padding="10dp"
-
                     android:scrollbars="vertical"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -102,8 +98,6 @@
 
 
             </androidx.core.widget.NestedScrollView>
-            <!-- Buttons -->
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -118,14 +112,14 @@
                     android:layout_marginVertical="10dp"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/login_btn_gradient"
-                    android:drawableEnd="@drawable/save"
+                    android:drawableEnd="@drawable/speaker"
                     android:fontFamily="@font/kavoon"
                     android:paddingHorizontal="30dp"
                     android:shadowColor="#C3C3C3"
                     android:shadowDx="7"
                     android:shadowDy="3"
                     android:shadowRadius="5"
-                    android:text="Save"
+                    android:text="Speaker"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:backgroundTint="@null"

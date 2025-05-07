@@ -5,10 +5,11 @@ import com.google.gson.reflect.TypeToken
 import com.salmee.artai.model.Image
 
 object SharedPreferencesHelper {
-    private const val PREFS_NAME = "user_prefs"
-    private const val KEY_GENDER = "gender" // Keep existing keys if needed
+    private const val PREFS_NAME = "user_prefs"// Keep existing keys if needed
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_IS_GUEST = "is_guest"
+    private const val KEY_USER_GENDER = "user_gender"
+    private const val KEY_USER_NAME = "user_name"
     private const val KEY_FAVORITE_IMAGE_IDS = "favorite_image_ids" // Key for storing favorite IDs
     private const val KEY_FAVORITE_IMAGES = "favorite_images"
 
@@ -29,13 +30,7 @@ object SharedPreferencesHelper {
         getPrefs(context).edit().remove(KEY_AUTH_TOKEN).apply()
     }
 
-    fun saveGender(context: Context, gender: String) {
-        getPrefs(context).edit().putString(KEY_GENDER, gender).apply()
-    }
 
-    fun getGender(context: Context): String {
-        return getPrefs(context).getString(KEY_GENDER, "") ?: ""
-    }
 
     fun setGuestMode(context: Context, isGuest: Boolean) {
         getPrefs(context).edit().putBoolean(KEY_IS_GUEST, isGuest).apply()
@@ -86,7 +81,20 @@ object SharedPreferencesHelper {
             getPrefs(context).edit().putStringSet(KEY_FAVORITE_IMAGE_IDS, favorites).apply()
         }
     }
+    fun saveUserGender(context: Context, gender: String) {
+        getPrefs(context).edit().putString(KEY_USER_GENDER, gender).apply()
+    }
 
+    fun getUserGender(context: Context): String? {
+        return getPrefs(context).getString(KEY_USER_GENDER, null)
+    }
+    fun saveUserName(context: Context, name: String) {
+        getPrefs(context).edit().putString(KEY_USER_NAME, name).apply()
+    }
+
+    fun getUserName(context: Context): String? {
+        return getPrefs(context).getString(KEY_USER_NAME, null)
+    }
     fun toggleFavorite(context: Context, image: Image): Boolean {
         val prefs = getPrefs(context)
         val gson = Gson()

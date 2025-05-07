@@ -1,6 +1,6 @@
 package com.salmee.artai.model
 
-data class DrawingItem(
+data class PaintItem(
     val imageResId: Int,
     val youtubeUrl: String
 )

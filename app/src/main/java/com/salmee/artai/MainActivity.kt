@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val loginBtn :Button =findViewById(R.id.login_btn)
         val signupBtn :Button =findViewById(R.id.signup_btn)
-        val guestBtn :Button =findViewById(R.id.guest_btn)
+       // val guestBtn :Button =findViewById(R.id.guest_btn)
 
         loginBtn.setOnClickListener {
 
@@ -35,13 +35,13 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        guestBtn.setOnClickListener {
+       /* guestBtn.setOnClickListener {
 
             val intent = Intent(this, ModelActivity::class.java)
             intent.putExtra("IS_GUEST", true)  // Pass guest mode flag
             startActivity(intent)
             finish()
-        }
+        }*/
 
 
     }

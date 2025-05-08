@@ -11,8 +11,8 @@ object MockHabitsData {
         return listOf(
             Habit(
                 1,
-                "Get Dressed",
-                "Get Dressed",
+                "Setting up your bed",
+                "A young boy is sitting up in bed, wrapped in a yellow blanket, as he wakes up in the morning. His bed has a cozy setup with pillows and a purple frame. Waking up marks the start of a new day, and a good morning routine helps improve energy, focus, and productivity.",
                 R.drawable.mh_make_bed),
             Habit(
                 2,
@@ -22,21 +22,24 @@ object MockHabitsData {
             Habit
                 (
                 3,
-                "Get Dressed",
-                "Brushing Teeth Before Bedtime\n" +
-                    "A little boy in blue pajamas is brushing his teeth at the sink, making sure his teeth are clean before going to sleep. Good oral hygiene at night helps prevent cavities and keeps teeth strong and healthy.",
+                "Brushing Teeth for a Healthy Smile",
+                    "A young girl with brown pigtails is standing at the sink, brushing her teeth while holding a cup in her other hand. She is wearing a green t-shirt and appears focused on maintaining good oral hygiene. Brushing teeth is an essential part of daily self-care, helping to keep teeth clean, prevent cavities, and promote fresh breath.",
                 R.drawable.mh_brush_teeth),
             Habit(
                 4,
-                "Take a shower",
-                "Starting the day with a refreshing shower is a great habit for YOU! It help you wake up, feel energized, and stay clean. " +
-                        "A morning shower can also improve focus and set a positive tone for the day. \uD83D\uDEBF\uD83D\uDE0A",
+                "Refreshing Morning Shower",
+                "A boy is happily taking a shower, scrubbing his hair with shampoo while covered in bubbles. The showerhead is running, creating a relaxing and refreshing moment. Showering is an important hygiene practice that helps remove dirt, sweat, and germs, keeping the body fresh and clean for the day ahead.",
                 R.drawable.mh_take_path),
             Habit(
                 5,
                 "Enjoying a Delicious Meal",
                 "A young boy is sitting at a table, excitedly holding a spoon and fork in his hands, ready to enjoy his meal. The table is covered with a purple tablecloth and has various food items, including bread, soup, and juice. Eating well-balanced meals is essential for maintaining good health and energy throughout the day",
                 R.drawable.mh_breakfast),
+            Habit(
+                5,
+                "Get Dressed",
+                "A mother is kneeling next to a small child, assisting them in getting dressed in front of an open wardrobe. The shelves contain neatly arranged books and other items. Teaching children how to dress themselves is an important step in their development, promoting independence and self-care skills.",
+                R.drawable.mh_change_clothes),
 
         )
     }
@@ -44,7 +47,7 @@ object MockHabitsData {
         return listOf(
             Habit(
                 7,
-                "ending the Day with a Healthy Dinner",
+                "Enjoying a Healthy Dinner",
                 "A young girl is sitting at a table, enjoying a healthy dinner that includes fruits, bread, and a bowl of cereal, along with a glass of juice. Eating a well-balanced meal in the evening is important to maintain energy levels and promote restful sleep.",
                 R.drawable.nh_dinner),
             Habit(
@@ -73,7 +76,7 @@ object MockHabitsData {
                 R.drawable.ah_lundary),
             Habit(
                 8,
-                "Washing Dishes After a Mea",
+                "Washing Dishes After a Meal",
                 "A young girl and her mother are washing and drying dishes at the sink. Learning to clean up after meals fosters responsibility and good hygiene habits from an early age",
                 R.drawable.ah_washing_dishes),
             Habit(
@@ -82,10 +85,20 @@ object MockHabitsData {
                 "A little girl is carefully putting her toys into a storage box. Cleaning up after playtime helps children learn the importance of keeping their space neat and clutter-free.",
                 R.drawable.ah_collect_toys),
             Habit(
-                10,
+                11,
+                "Keep the House Clean and Tidy",
+                "A mother and child are dusting furniture and vacuuming the floor. Working together to clean the house encourages teamwork and helps maintain a neat and comfortable living space.",
+                R.drawable.ah_help_mom_incleaning),
+            Habit(
+                12,
                 "Cooking Together as a Family",
                 "A mother and her children are in the kitchen, wearing chef hats and preparing food together. Cooking as a family teaches kids essential life skills while creating fun and memorable moments",
                 R.drawable.ah_cooking_with_mpmom),
+            Habit(
+                13,
+                "Organizing Closthes in the Closet",
+                "Two children are happily folding and arranging clothes inside a wardrobe. Keeping clothes neat and organized helps children develop independence and a sense of responsibility.",
+                R.drawable.ah_organizing_closet),
         )
     }
     fun getSportsTeam(): List<Habit> {
@@ -93,23 +106,26 @@ object MockHabitsData {
 
             Habit(
                 10,
-                "Playing Soccer on the Field",
-                "A soccer player in a yellow jersey is kicking a ball with power and precision. Teamwork, strategy, and agility are key elements of this fast-paced sport.",
+                "Football",
+                " Football improves cardiovascular health, builds lower-body strength, enhances coordination and agility, and promotes teamwork and communication skills. It also helps develop discipline and strategic",
                 R.drawable.sport7),
             Habit(
                 12,
-                "Shooting a Basketball",
-                "A basketball player in a red jersey is leaping toward the hoop, aiming for a slam dunk. Basketball requires speed, coordination, and teamwork to score points and win games.",
+                "Basketball",
+                "A basketball player is soaring through the air for a slam dunk, showing explosive power and agility.\n" +
+                        "Basketball is a high-intensity sport that improves cardiovascular health, builds muscular strength, and enhances coordination and balance. It promotes teamwork, quick decision-making, and boosts mental focus while also being a fun and social way to stay active.",
                 R.drawable.sport6),
             Habit(
                 10,
-                "Spiking a Volleyball",
-                "Players are engaged in an intense volleyball match, jumping to block and spike the ball. Volleyball is a sport that builds teamwork, communication, and athletic skills.",
+                "Volleyball",
+                "Two players are jumping high at the net, actively engaged in a competitive volleyball match.\n" +
+                        "Volleyball boosts hand-eye coordination, builds upper-body and core strength, improves balance and flexibility, and encourages teamwork. It also enhances quick decision-making and social interaction.",
                 R.drawable.sport4),
             Habit(
                 9,
-                "Throwing a Handball",
-                "A handball player is mid-air, preparing to throw the ball towards the goal with precision. Handball is a dynamic sport that combines speed, agility, and team coordination.",
+                "Handball",
+                "A handball player is mid-jump, preparing to throw the ball with speed and precision toward the goal.\n" +
+                        "Handball is an intense, fast-paced game that increases aerobic fitness, hand-eye coordination, and agility. It strengthens upper and lower body muscles, improves reflexes, and encourages strategic thinking and communication within a team.",
                 R.drawable.sport3),
 
 
@@ -119,18 +135,20 @@ object MockHabitsData {
         return listOf(
             Habit(
                 11,
-                "Sleep Early",
-                "Get Dressed",
+                "Swimming",
+                "A swimmer is gliding through the water using powerful freestyle strokes.\n" +
+                        "Swimming is a full-body workout that strengthens muscles, improves heart and lung function, increases flexibility, and reduces stress. It’s a low-impact activity suitable for all ages, making it great for overall fitness and mental well-being.",
                 R.drawable.sport5),
             Habit(
                 8,
-                "Take a Shower",
-                "Get Dressed",
+                "Tennis",
+                "A tennis player is in motion, ready to strike the ball with a forehand swing.\n" +
+                        "Tennis provides a powerful combination of cardio, strength, and flexibility training. It enhances balance, coordination, and reaction time while building endurance and muscular tone. The game also supports mental sharpness through strategic play and quick decision-making.",
                 R.drawable.sport2),
             Habit(
                 7,
-                "Read a Book",
-                "Get Dressed",
+                "Badminton",
+                "Badminton is a dynamic sport that offers numerous physical, mental, and social benefits. It improves cardiovascular health, builds muscle strength, enhances reflexes, aids weight management, reduces stress, sharpens focus, fosters discipline, and promotes teamwork. With minimal equipment requirements, it's accessible to all ages and skill levels.",
                 R.drawable.sport1),
             )
     }
@@ -138,20 +156,20 @@ object MockHabitsData {
         return listOf(
             Habit(
                 11,
-                "Sleep Early",
-                "Get Dressed",
+                "Karate",
+                "Karate is a competitive sport and traditional martial art that offers physical, mental, and social benefits. It enhances strength, flexibility, reflexes, cardiovascular health, mental discipline, focus, self-control, and focus. Its belt-ranking system promotes goal-setting and perseverance, while kata and kumite develop precision and adaptability.",
                 R.drawable.sport_material_art1),
             Habit(8,
-                "Take a Shower",
-                "Get Dressed",
+                "Taekwondo",
+                "Taekwondo is a martial art that enhances physical fitness, mental discipline, confidence, and self-defense skills through dynamic kicks and strikes. It emphasizes speed, agility, and high-flying techniques, making it an effective combat system and thrilling spectator sport. Taekwondo instills core values of respect, perseverance, and indomitable spirit through its belt ranking system and competitive opportunities.",
                 R.drawable.sport_material_art2),
             Habit(7,
-                "Read a Book",
-                "Get Dressed",
+                "Judo",
+                "Judo is a transformative martial art that builds strength, agility, and endurance, teaches self-defense, cultivates discipline, and fosters humility. As an Olympic sport, it offers competitive goals and lifelong values, empowering individuals of all ages to grow stronger in body, mind, and spirit.",
                 R.drawable.sport_material_art3),
             Habit(7,
-                "Read a Book",
-                "Get Dressed",
+                "Boxing",
+                "Boxing offers physical, mental, and social benefits beyond combat. It improves cardiovascular health, builds strength, burns calories, sharpens reflexes, and enhances self-defense skills. Mentally, it cultivates discipline, stress relief, and confidence. Boxing fosters camaraderie and offers competitive pathways, making it a comprehensive practice.",
                 R.drawable.sport_material_art4),
         )
     }
@@ -159,12 +177,12 @@ object MockHabitsData {
         return listOf(
             Habit(
                 11,
-                "Sleep Early",
-                "Get Dressed",
+                "Gymnastics",
+                "Gymnastics is a transformative sport that develops physical strength, flexibility, coordination, mental discipline, confidence, and creativity. It promotes full-body conditioning, bone health, injury prevention, and life skills like perseverance, focus, teamwork, and artistic expression. It enhances performance in other athletic pursuits.",
                 R.drawable.sport_artistic1),
             Habit(11,
-                "Sleep Early",
-                "Get Dressed",
+                "Ballet",
+                "Ballet is a demanding art form that enhances physical strength, flexibility, endurance, mental discipline, artistic expression, and emotional resilience. It builds musculature, improves posture, and enhances cardiovascular health. Ballet also instills life skills like focus, perseverance, teamwork, and creative confidence.",
                 R.drawable.sport_artistic2),
 
         )

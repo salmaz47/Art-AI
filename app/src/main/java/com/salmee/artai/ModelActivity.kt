@@ -105,7 +105,8 @@ class ModelActivity : AppCompatActivity() {
                     // Enable share & save
                     saveButton.setOnClickListener {
                         SharedPreferencesHelper.toggleFavorite(this, generatedImage)
-                        Toast.makeText(this, "Toggled favorite", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,
+                            getString(R.string.toggled_favorite), Toast.LENGTH_SHORT).show()
                     }
 
                     shareButton.setOnClickListener {
@@ -118,13 +119,15 @@ class ModelActivity : AppCompatActivity() {
                         if (shareIntent.resolveActivity(packageManager) != null) {
                             startActivity(Intent.createChooser(shareIntent, "Share via"))
                         } else {
-                            Toast.makeText(this, "No app available to share.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,
+                                getString(R.string.no_app_available_to_share), Toast.LENGTH_SHORT).show()
                         }
                     }
                 },
                 onFailure = { exception ->
                     Log.e("ModelActivity", "Image generation failed: ${exception.message}")
-                    Toast.makeText(this, "Generation failed: ${exception.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,
+                        getString(R.string.generation_failed, exception.message), Toast.LENGTH_LONG).show()
                     binding.generatedImageView.setImageResource(R.drawable.error_placeholder) // Show error placeholder
                 }
             )

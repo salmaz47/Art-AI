@@ -21,7 +21,7 @@
         android:shadowDx="7"
         android:shadowDy="3"
         android:shadowRadius="5"
-        android:text="Sports"
+        android:text="@string/sports"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="10dp"
                 android:shadowRadius="5"
-                android:text="Team Sports"
+                android:text="@string/team_sports"
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
@@ -85,7 +85,7 @@
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="10dp"
                 android:shadowRadius="5"
-                android:text="Individual Sports"
+                android:text="@string/individual_sports"
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
@@ -113,7 +113,7 @@
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="10dp"
                 android:shadowRadius="5"
-                android:text="Material Arts"
+                android:text="@string/material_arts"
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
@@ -140,7 +140,7 @@
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="10dp"
                 android:shadowRadius="5"
-                android:text="Graceful &amp; Artistic Sports"
+                android:text="@string/graceful_artistic_sports"
                 android:textColor="#000000"
                 android:textSize="25sp" />
 

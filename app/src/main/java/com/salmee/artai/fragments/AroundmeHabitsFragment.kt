@@ -34,7 +34,7 @@ class AroundmeHabitsFragment : Fragment() {
         val recyclerView = binding.recyclerViewHabits
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapter = HabitsAdapter(MockHabitsData.getAroundmeHabits()) { habit ->
+        val adapter = HabitsAdapter(MockHabitsData.getAroundmeHabits(requireContext())) { habit ->
             // Handle item click
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)

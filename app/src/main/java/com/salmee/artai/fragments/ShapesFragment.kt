@@ -27,7 +27,7 @@ class ShapesFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewHabits)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val shapes = MockHabitsData.getShapes()
+        val shapes = MockHabitsData.getShapes(requireContext())
         val adapter = ShapesAdapter(shapes) { selectedHabit ->
             Toast.makeText(requireContext(), selectedHabit.name, Toast.LENGTH_SHORT).show()
         }

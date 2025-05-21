@@ -112,7 +112,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_20sdp"
-                    android:text="Favorite"
+                    android:text="@string/favorite"
                     android:shadowColor="@color/black"
                     android:elevation="@dimen/_50sdp"
                     android:textColor="@color/black"

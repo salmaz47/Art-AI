@@ -17,7 +17,7 @@
         android:shadowDx="7"
         android:shadowDy="3"
         android:shadowRadius="5"
-        android:text="Life Style"
+        android:text="@string/life_style"
         android:textColor="#000000"
         android:textSize="@dimen/_25ssp"
         app:layout_constraintStart_toStartOf="parent"

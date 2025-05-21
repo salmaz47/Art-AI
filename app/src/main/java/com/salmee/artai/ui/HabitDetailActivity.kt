@@ -44,7 +44,7 @@ class HabitDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         // Find and set up speak button
         val speakButton = findViewById<Button>(R.id.speak_btn)
-        speakButton.text = "Speak"
+        speakButton.text = getString(R.string.speak)
 
         // Try to set the icon
         try {
@@ -98,11 +98,13 @@ class HabitDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             val result = textToSpeech.setLanguage(Locale.getDefault())
 
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Toast.makeText(this, "Text-to-Speech language not supported", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.text_to_speech_language_not_supported), Toast.LENGTH_SHORT).show()
                 findViewById<Button>(R.id.speak_btn).isEnabled = false
             }
         } else {
-            Toast.makeText(this, "Text-to-Speech initialization failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.text_to_speech_initialization_failed), Toast.LENGTH_SHORT).show()
             findViewById<Button>(R.id.speak_btn).isEnabled = false
         }
     }
@@ -114,7 +116,7 @@ class HabitDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 if (textToSpeech.isSpeaking) {
                     textToSpeech.stop()
                 }
-                findViewById<Button>(R.id.speak_btn).text = "Speak"
+                findViewById<Button>(R.id.speak_btn).text = getString(R.string.speak)
                 isSpeaking = false
             } else {
                 // Start speaking
@@ -126,12 +128,13 @@ class HabitDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     @Suppress("DEPRECATION")
                     textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, params)
                 }
-                findViewById<Button>(R.id.speak_btn).text = "Stop"
+                findViewById<Button>(R.id.speak_btn).text = getString(R.string.stop)
                 isSpeaking = true
             }
         } catch (e: Exception) {
             Log.e("HabitDetailActivity", "Error in toggleSpeech: ${e.message}")
-            Toast.makeText(this, "Error with text-to-speech: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.error_with_text_to_speech, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 

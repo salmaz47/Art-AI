@@ -39,7 +39,7 @@ class LettersFragment : Fragment() {
         val recyclerView =binding.recyclerViewHabits
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapter = HabitsAdapter(MockHabitsData.getLetters()) { habit ->
+        val adapter = HabitsAdapter(MockHabitsData.getLetters(requireContext())) { habit ->
             Toast.makeText(requireContext(), "${habit.name}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.adapter = adapter

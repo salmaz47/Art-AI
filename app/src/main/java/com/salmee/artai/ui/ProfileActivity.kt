@@ -77,8 +77,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun setProfileImageBasedOnGender() {
         val gender = SharedPreferencesHelper.getUserGender(applicationContext)
         when (gender) {
-            "male" -> binding.profileImage.setImageResource(R.drawable.boy_profile)
-            "female" -> binding.profileImage.setImageResource(R.drawable.girl_profile)
+            getString(R.string.male) -> binding.profileImage.setImageResource(R.drawable.boy_profile)
+            getString(R.string.female) -> binding.profileImage.setImageResource(R.drawable.girl_profile)
             else -> binding.profileImage.setImageResource(R.drawable.profile) // Default profile image
         }
     }
@@ -112,7 +112,7 @@ class ProfileActivity : AppCompatActivity() {
             if (success) {
                 navigateToLogin()
             } else {
-                Toast.makeText(this, "Logout failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.logout_failed), Toast.LENGTH_SHORT).show()
             }
         }
     }

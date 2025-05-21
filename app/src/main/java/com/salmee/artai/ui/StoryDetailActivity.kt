@@ -56,7 +56,7 @@ class StoryDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         habitTitle.setBackgroundColor(titleColor)
 
         // Change the button text to "Speak"
-        speakButton.text = "Speak"
+        speakButton.text = getString(R.string.speak)
         speakButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.speaker, 0)  // You might want to change this icon
 
         // handling buttons
@@ -77,7 +77,8 @@ class StoryDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (sendIntent.resolveActivity(packageManager) != null) {
                 startActivity(Intent.createChooser(sendIntent, "Share via"))
             } else {
-                Toast.makeText(this, "No app installed to share text.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.no_app_installed_to_share_text), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -108,11 +109,11 @@ class StoryDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             val result = textToSpeech.setLanguage(Locale.getDefault())
 
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Toast.makeText(this, "Text-to-Speech language not supported", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.text_to_speech_language_not_supported), Toast.LENGTH_SHORT).show()
                 speakButton.isEnabled = false
             }
         } else {
-            Toast.makeText(this, "Text-to-Speech initialization failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.text_to_speech_initialization_failed), Toast.LENGTH_SHORT).show()
             speakButton.isEnabled = false
         }
     }
@@ -123,13 +124,13 @@ class StoryDetailActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (textToSpeech.isSpeaking) {
                 textToSpeech.stop()
             }
-            speakButton.text = "Speak"
+            speakButton.text = getString(R.string.speak)
             isSpeaking = false
         } else {
             // Start speaking
             val text = habitDescription.text.toString()
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "story_id")
-            speakButton.text = "Stop"
+            speakButton.text = getString(R.string.stop)
             isSpeaking = true
         }
     }

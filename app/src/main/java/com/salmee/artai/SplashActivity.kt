@@ -32,9 +32,9 @@ class SplashActivity : AppCompatActivity() {
         logo.startAnimation(fadeInScaleUp)
 
         // Typing Effect for "Welcome To our World"
-        typeText(welcomeText, "Welcome To our", 130)
+        typeText(welcomeText, getString(R.string.welcome_to_our), 130)
         Handler(Looper.getMainLooper()).postDelayed({
-            typeText(worldText, "World", 130)
+            typeText(worldText, getString(R.string.world), 130)
         }, 1500) // Delay for second text
 
         // Delay before fading out and switching activity

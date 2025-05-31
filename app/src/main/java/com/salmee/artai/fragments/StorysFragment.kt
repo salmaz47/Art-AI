@@ -36,7 +36,7 @@ class StorysFragment : Fragment() {
         val recyclerView =binding.recyclerViewHabits
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapter = HabitsAdapter(MockHabitsData.getStory()) { habit ->
+        val adapter = HabitsAdapter(MockHabitsData.getStory(requireContext())) { habit ->
             val intent = Intent(requireContext(), StoryDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)
                 putExtra("habit_description", habit.description)

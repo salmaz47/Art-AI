@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/kavoon"
         android:gravity="center"
-        android:text="Welcome to, Art AI"
+        android:text="@string/welcome_to_art_ai"
         android:textColor="@color/blue"
         android:textSize="35sp" />
 
@@ -40,11 +40,7 @@
         android:lineSpacingExtra="2dp"
         android:paddingHorizontal="20dp"
         android:paddingTop="8dp"
-        android:text="An interactive and educational text-to-image generation app designed to spark creativity and fun for children!
-
-Our app's main feature allows users to generate unique images from text prompts using AI. This encourages imagination and helps children visualize their ideas in a fun and engaging way.
-
-To make the experience even more enjoyable, we’ve added a collection of pre-made images."
+        android:text="@string/about_content"
 
         android:textColor="@color/black"
         android:textSize="20sp" />

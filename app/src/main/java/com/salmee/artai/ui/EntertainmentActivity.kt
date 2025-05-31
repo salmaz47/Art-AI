@@ -36,7 +36,7 @@ class EntertainmentActivity : AppCompatActivity() {
         }
         binding.aroundMeCard.setOnClickListener {
             it.animateClickEffect()
-            val i =Intent(this, DrawingActivity::class.java)
+            val i =Intent(this, PaintActivity::class.java)
             startActivity(i)
         }
 

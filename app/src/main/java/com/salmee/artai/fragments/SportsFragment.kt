@@ -38,7 +38,7 @@ class SportsFragment : Fragment() {
         val recyclerViewTeam = binding.recyclerViewTeamSport
         recyclerViewTeam.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapterTeam = HabitsAdapter(MockHabitsData.getSportsTeam()) { habit ->
+        val adapterTeam = HabitsAdapter(MockHabitsData.getSportsTeam(requireContext())) { habit ->
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)
                 putExtra("habit_description", habit.description)
@@ -51,7 +51,7 @@ class SportsFragment : Fragment() {
         val recyclerViewIndividual = binding.recyclerViewIndividualSport
         recyclerViewTeam.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapterIndividual = HabitsAdapter(MockHabitsData.getSportsIndividual()) { habit ->
+        val adapterIndividual = HabitsAdapter(MockHabitsData.getSportsIndividual(requireContext())) { habit ->
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)
                 putExtra("habit_description", habit.description)
@@ -65,7 +65,7 @@ class SportsFragment : Fragment() {
         val recyclerViewMaterial =binding.recyclerViewMaterialArtsSport
         recyclerViewMaterial.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapterMaterial = HabitsAdapter(MockHabitsData.getSportsMaterialArts()) { habit ->
+        val adapterMaterial = HabitsAdapter(MockHabitsData.getSportsMaterialArts(requireContext())) { habit ->
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)
                 putExtra("habit_description", habit.description)
@@ -79,7 +79,7 @@ class SportsFragment : Fragment() {
         val recyclerViewArts =binding.recyclerViewGracefulSport
         recyclerViewTeam.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapterArts = HabitsAdapter(MockHabitsData.getSportsArtistic()) { habit ->
+        val adapterArts = HabitsAdapter(MockHabitsData.getSportsArtistic(requireContext())) { habit ->
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)
                 putExtra("habit_description", habit.description)

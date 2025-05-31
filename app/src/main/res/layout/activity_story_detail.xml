@@ -51,13 +51,7 @@
                     android:layout_height="200dp"
                     android:scaleType="centerCrop" />
 
-                <ImageView
-                    android:id="@+id/favorite_btn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/favourite" />
+
             </LinearLayout>
 
             <!-- Habit Title -->
@@ -80,8 +74,11 @@
                 android:textStyle="bold" />
 
             <!-- Habit Description -->
+            <!-- Buttons -->
+
+
             <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/_280sdp"
                 android:layout_height="250dp"
                 android:background="@drawable/bordered_textbox"
                 android:padding="10dp"
@@ -89,21 +86,18 @@
 
                 <TextView
                     android:id="@+id/habitDescription"
-                    android:layout_width="350dp"
+                    android:layout_width="@dimen/_260sdp"
                     android:layout_height="0dp"
                     android:lineSpacingExtra="2dp"
                     android:padding="10dp"
-
                     android:scrollbars="vertical"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
-                    tools:text="Once upon a time..." />
+                    tools:text="Once upon a time, in a big green forest, there was a little squirrel named Benny. Benny was small but very curious. One day, a strong wind blew, and Benny’s favorite acorn fell into the river. He was scared, but he knew he had to get it back.\n Benny bravely climbed a tree and jumped onto a floating log. The river was fast, but Benny held on tight. With one big leap, he grabbed his acorn and landed safely on the riverbank! The other animals cheered, and Benny learned that courage isn’t about being big—it’s about believing in yourself!" />
 
 
             </androidx.core.widget.NestedScrollView>
-            <!-- Buttons -->
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -118,14 +112,14 @@
                     android:layout_marginVertical="10dp"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/login_btn_gradient"
-                    android:drawableEnd="@drawable/save"
+                    android:drawableEnd="@drawable/speaker"
                     android:fontFamily="@font/kavoon"
                     android:paddingHorizontal="30dp"
                     android:shadowColor="#C3C3C3"
                     android:shadowDx="7"
                     android:shadowDy="3"
                     android:shadowRadius="5"
-                    android:text="Save"
+                    android:text="@string/speaker"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:backgroundTint="@null"
@@ -143,7 +137,7 @@
                     android:shadowDx="7"
                     android:shadowDy="3"
                     android:shadowRadius="5"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@color/black"
                     android:textSize="20sp"
 

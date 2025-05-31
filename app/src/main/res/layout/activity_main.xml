@@ -81,18 +81,7 @@
          app:backgroundTint="@null"
          app:cornerRadius="50dp" />
 
-     <Button
-         android:id="@+id/guest_btn"
-         android:layout_width="@dimen/_230sdp"
-         android:layout_height="wrap_content"
-         android:layout_marginVertical="@dimen/_8sdp"
-         android:background="@drawable/gest_btn_gradient"
-         android:fontFamily="@font/poppins_bold"
-         android:text="@string/continue_as_a_guest"
-         android:textColor="@color/white"
-         android:textSize="@dimen/_16ssp"
-         app:backgroundTint="@null"
-         app:cornerRadius="50dp" />
+
 
      <TextView
          android:id="@+id/last_text"

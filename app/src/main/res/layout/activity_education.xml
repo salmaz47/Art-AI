@@ -110,7 +110,7 @@
             android:shadowDx="7"
             android:shadowDy="3"
             android:shadowRadius="5"
-            android:text="Letters"
+            android:text="@string/letters"
             android:textColor="#ED3A77"
             android:textSize="@dimen/_25ssp"
             app:layout_constraintVertical_bias="1.0" />
@@ -146,7 +146,7 @@
             android:shadowDx="7"
             android:shadowDy="3"
             android:shadowRadius="5"
-            android:text="Shapes"
+            android:text="@string/shapes"
             android:textColor="#05BFC2"
             android:textSize="@dimen/_25ssp"
             app:layout_constraintVertical_bias="1.0" />

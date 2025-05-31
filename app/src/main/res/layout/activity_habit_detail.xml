@@ -103,7 +103,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/fav_btn"
+                    android:id="@+id/speak_btn"
                     android:layout_width="165dp"
                     android:layout_height="55dp"
                     android:layout_marginVertical="@dimen/_8sdp"
@@ -112,7 +112,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_20sdp"
-                    android:text="Favorite"
+                    android:text="@string/favorite"
                     android:shadowColor="@color/black"
                     android:elevation="@dimen/_50sdp"
                     android:textColor="@color/black"

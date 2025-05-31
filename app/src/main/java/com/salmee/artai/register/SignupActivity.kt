@@ -7,16 +7,16 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider // Import ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import com.salmee.artai.R
 import com.salmee.artai.databinding.ActivitySignupBinding
 import com.salmee.artai.presentation.viewmodel.AuthViewModel
-import com.salmee.artai.utils.ViewModelFactory // Import ViewModelFactory
+import com.salmee.artai.utils.ViewModelFactory
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var authViewModel: AuthViewModel
-    // Removed SharedPreferences for name/gender, will rely on backend
+    private var selectedGender: String? = null // Add gender tracking
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -26,7 +26,6 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // --- ViewModel Setup ---
-        // Use ViewModelFactory to get AuthViewModel
         val factory = ViewModelFactory(context = applicationContext)
         authViewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
 
@@ -40,7 +39,9 @@ class SignupActivity : AppCompatActivity() {
             editText.addTextChangedListener {
                 // Also check if passwords match
                 val passwordsMatch = binding.passwordField.text.toString() == binding.confirmPassword.text.toString()
-                binding.doneBtn.isEnabled = textFields.all { it.text.isNotEmpty() } && passwordsMatch
+                binding.doneBtn.isEnabled = textFields.all { it.text.isNotEmpty() } &&
+                        passwordsMatch && selectedGender != null // Add gender check
+
                 if (binding.confirmPassword.text.isNotEmpty() && !passwordsMatch) {
                     binding.confirmPassword.error = "Passwords do not match"
                 } else {
@@ -49,15 +50,38 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
+        // Setup gender selection with mutual exclusivity
+        binding.checkBoxBoy.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.checkBoxGirl.isChecked = false
+                selectedGender = "male"
+                updateButtonState()
+            } else if (!binding.checkBoxGirl.isChecked) {
+                selectedGender = null
+                updateButtonState()
+            }
+        }
+
+        binding.checkBoxGirl.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.checkBoxBoy.isChecked = false
+                selectedGender = "female"
+                updateButtonState()
+            } else if (!binding.checkBoxBoy.isChecked) {
+                selectedGender = null
+                updateButtonState()
+            }
+        }
+
         binding.doneBtn.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_elevation))
             val name = binding.nameField.text.toString().trim()
             val email = binding.emailField.text.toString().trim()
             val password = binding.passwordField.text.toString()
-            // Removed gender selection as it wasn't part of backend signup
+            val age = binding.age.text.toString()
 
-            // Basic validation (already partially handled by button enable state)
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            // Basic validation
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || age.isEmpty() || selectedGender == null) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -65,6 +89,10 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // Save gender preference for profile picture
+            SharedPreferencesHelper.saveUserGender(applicationContext, selectedGender!!)
+            SharedPreferencesHelper.saveUserName(applicationContext, name)
 
             // Observe signup result from ViewModel
             authViewModel.signupResult.observe(this) { result ->
@@ -87,12 +115,19 @@ class SignupActivity : AppCompatActivity() {
         }
 
         // --- Already have an account Link ---
-//        binding.alreadyHaveAnAccount.setOnClickListener {
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish() // Finish SignupActivity when going back to Login
-//        }
+
+        /*  binding.alreadyHaveAnAccount?.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish() // Finish SignupActivity when going back to Login
+        }*/
     }
 
-    // Removed saveUserData function
+    private fun updateButtonState() {
+        val textFields = listOf(
+            binding.nameField, binding.emailField, binding.passwordField, binding.confirmPassword
+        )
+        val passwordsMatch = binding.passwordField.text.toString() == binding.confirmPassword.text.toString()
+        binding.doneBtn.isEnabled = textFields.all { it.text.isNotEmpty() } &&
+                passwordsMatch && selectedGender != null
+    }
 }
-

@@ -156,24 +156,7 @@
 
 
         <!-- Social Login Icons -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
 
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:src="@drawable/google_logo"
-                android:layout_marginEnd="@dimen/_25sdp"/>
-
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:src="@drawable/facebook_logo"/>
-        </LinearLayout>
 
         <!-- Done Button -->
         <Button

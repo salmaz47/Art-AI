@@ -36,7 +36,7 @@ class NightHabitsFragment : Fragment() {
         val recyclerView = binding.recyclerViewHabits
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapter = HabitsAdapter(MockHabitsData.getNightHabits()) { habit ->
+        val adapter = HabitsAdapter(MockHabitsData.getNightHabits(requireContext())) { habit ->
 
             val intent = Intent(requireContext(), HabitDetailActivity::class.java).apply {
                 putExtra("habit_name", habit.name)

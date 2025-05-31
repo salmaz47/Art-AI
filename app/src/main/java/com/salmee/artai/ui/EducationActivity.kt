@@ -36,6 +36,7 @@ class EducationActivity : AppCompatActivity() {
         }
         binding.shapesCard.setOnClickListener {
             it.animateClickEffect()
+
             val i =Intent(this, ShapesActivity::class.java)
             startActivity(i)
         }

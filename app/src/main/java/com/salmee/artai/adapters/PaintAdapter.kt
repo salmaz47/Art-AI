@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.salmee.artai.R
@@ -27,6 +28,7 @@ class PaintAdapter(private var paintItems: List<PaintItem>) :
         init {
             // Set click listener for each item
             itemView.setOnClickListener {
+                it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_elevation))
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // Get the URL for the clicked position
